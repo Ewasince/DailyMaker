@@ -1,0 +1,17 @@
+<RCC>
+  <qresource prefix="1_schedule">
+    <file>1_schedule.jpg</file>
+    <file>1_schedule_down.jpg</file>
+    <file>1_schedule_up.jpg</file>
+  </qresource>
+  <qresource prefix="2_add">
+    <file>2_add.jpg</file>
+    <file>2_add_down.jpg</file>
+    <file>2_add_up.jpg</file>
+  </qresource>
+  <qresource prefix="3_analytics">
+    <file>3_analytics.jpg</file>
+    <file>3_analytics_down.jpg</file>
+    <file>3_analytics_up.jpg</file>
+  </qresource>
+</RCC>

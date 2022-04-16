@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>750</width>
+    <height>580</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>750</width>
+    <height>580</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLineEdit" name="lineEdit_name">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>441</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string/>
+   </property>
+   <property name="text">
+    <string comment="testest" extracomment="test"/>
+   </property>
+   <property name="dragEnabled">
+    <bool>false</bool>
+   </property>
+   <property name="placeholderText">
+    <string>Название события</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_save">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>10</y>
+     <width>131</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Сохранить</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_delete">
+   <property name="geometry">
+    <rect>
+     <x>610</x>
+     <y>10</y>
+     <width>131</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Удалить</string>
+   </property>
+  </widget>
+  <widget class="QTimeEdit" name="timeEdit_start">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>221</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="time">
+    <time>
+     <hour>10</hour>
+     <minute>0</minute>
+     <second>0</second>
+    </time>
+   </property>
+  </widget>
+  <widget class="QTimeEdit" name="timeEdit_end">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>40</y>
+     <width>211</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="time">
+    <time>
+     <hour>11</hour>
+     <minute>0</minute>
+     <second>0</second>
+    </time>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_today">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>40</y>
+     <width>131</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>На сегодня</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_tomorrow">
+   <property name="geometry">
+    <rect>
+     <x>610</x>
+     <y>40</y>
+     <width>131</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>На завтра</string>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="dateEdit_date">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>70</y>
+     <width>281</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="dateTime">
+    <datetime>
+     <hour>0</hour>
+     <minute>0</minute>
+     <second>0</second>
+     <year>2022</year>
+     <month>1</month>
+     <day>1</day>
+    </datetime>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_tags">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>70</y>
+     <width>441</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Тэги, через запятую</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_main">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>100</y>
+     <width>441</width>
+     <height>471</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>100</y>
+     <width>91</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Повтор каждые </string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBox_count_repeats">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>100</y>
+     <width>42</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_gap">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>100</y>
+     <width>141</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="currentText">
+    <string>дня</string>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <item>
+    <property name="text">
+     <string>дня</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>недели</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>месяц</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>год</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QWidget" name="widget_week" native="true">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>130</y>
+     <width>281</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <widget class="QCheckBox" name="checkBox_mo">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>41</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Пн</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_tu">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>10</y>
+      <width>41</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Вт</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_we">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>10</y>
+      <width>41</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ср</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_th">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>10</y>
+      <width>41</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Чт</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_fr">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>10</y>
+      <width>31</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Пт</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_sa">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>10</y>
+      <width>41</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Сб</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_su">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>10</y>
+      <width>31</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Вс</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="widget_month" native="true">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>130</y>
+     <width>281</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <widget class="QCheckBox" name="checkBox_gap_month">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>70</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Отмечен</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="horizontalSlider">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>241</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>31</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_endure">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>40</y>
+      <width>111</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Переносить или удалять при выходе за рамки намеченного срока&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="text">
+     <string>Переносить даты</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_slider">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>10</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>1</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="widget_year" native="true">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>130</y>
+     <width>281</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <widget class="QDateEdit" name="dateEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>261</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="displayFormat">
+     <string>dd.MM</string>
+    </property>
+   </widget>
+  </widget>
+  <zorder>lineEdit_name</zorder>
+  <zorder>pushButton_save</zorder>
+  <zorder>pushButton_delete</zorder>
+  <zorder>timeEdit_start</zorder>
+  <zorder>timeEdit_end</zorder>
+  <zorder>pushButton_today</zorder>
+  <zorder>pushButton_tomorrow</zorder>
+  <zorder>dateEdit_date</zorder>
+  <zorder>lineEdit_tags</zorder>
+  <zorder>textEdit_main</zorder>
+  <zorder>label</zorder>
+  <zorder>spinBox_count_repeats</zorder>
+  <zorder>comboBox_gap</zorder>
+  <zorder>widget_week</zorder>
+  <zorder>widget_year</zorder>
+  <zorder>widget_month</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
