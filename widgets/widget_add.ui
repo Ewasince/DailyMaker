@@ -193,7 +193,7 @@
     </rect>
    </property>
    <property name="minimum">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="maximum">
     <number>100</number>
@@ -425,7 +425,7 @@
      <height>41</height>
     </rect>
    </property>
-   <widget class="QDateEdit" name="dateEdit">
+   <widget class="QDateEdit" name="dateEdit_year">
     <property name="geometry">
      <rect>
       <x>10</x>

@@ -1,19 +1,23 @@
-from plan_instance import Gaps
+import plan_manager
+from plan_manager import Gaps, onetime_instance, reusable_instance
 
 from widgets.widget_add import Ui_Form
 from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QMessageBox
+
+import datetime
 
 
 class Ui_Add(Ui_Form):
-    widget = None
-    owner = None
-    widgets = []
-    slider_vals = []
+    widget = None  # виджет, с которым мы работаем
+    owner = None  # родительский элемент интерфейса
+    widgets = []  # контейнеры с доп инфой, который показываются при указании повтора события
+    checked_days_of_month = []  # массив для работы слайдера
+    list_checkboxes_week = ()  # массив для удобного перебора чекбоксов дней недели
 
     def __init__(self, owner):
-        self.owner = owner
-        for i in range(31):
-            self.slider_vals.append(False)
+        self.owner = owner  # установка родительского жлемента
+        self.initialize_slider()
 
     def setupUi(self):
         self.widget = QtWidgets.QWidget(self.owner)
@@ -35,6 +39,37 @@ class Ui_Add(Ui_Form):
         self.pushButton_today.clicked.connect(self.today_event)
         self.pushButton_tomorrow.clicked.connect(self.tomorrow_event)
 
+        self.list_checkboxes_week = (
+            self.checkBox_mo, self.checkBox_tu, self.checkBox_we, self.checkBox_th, self.checkBox_fr, self.checkBox_sa,
+            self.checkBox_su)
+
+        self.set_default()
+
+    def clear_fields(self):
+        self.lineEdit_name.setText('')
+        self.lineEdit_tags.setText('')
+        self.textEdit_main.setText('')
+        self.spinBox_count_repeats.setValue(0)
+        self.comboBox_gap.setCurrentIndex(0)
+        self.comboBox_event()
+        self.checkBox_endure.setChecked(False)
+        self.checkBox_gap_month.setChecked(False)
+        self.initialize_slider()
+        for item in self.list_checkboxes_week:
+            item.setChecked(False)
+        self.set_default()
+
+    def initialize_slider(self):  # инициализация массива, нужного для работы слайдера
+        self.checked_days_of_month = []
+        for i in range(31):
+            self.checked_days_of_month.append(False)
+
+    def set_default(self):
+        self.today_event()
+        now = datetime.datetime.now()
+        self.timeEdit_start.setTime(datetime.time(now.hour + 1))
+        self.timeEdit_end.setTime(datetime.time(now.hour + 2))
+        self.dateEdit_year.setDate(datetime.date.today())
 
     def comboBox_event(self):
         value = self.comboBox_gap.currentText()
@@ -58,22 +93,105 @@ class Ui_Add(Ui_Form):
     def slider_event(self):
         num = self.horizontalSlider.sliderPosition()
         self.label_slider.setText(str(num))
-        vals = self.slider_vals
-        self.checkBox_gap_month.setChecked(vals[num-1])
+        vals = self.checked_days_of_month
+        self.checkBox_gap_month.setChecked(vals[num - 1])
 
     def checked_gap_month_event(self):
         status = self.checkBox_gap_month.isChecked()
         slider_position = self.horizontalSlider.sliderPosition()
-        self.slider_vals[slider_position-1] = status
+        self.checked_days_of_month[slider_position - 1] = status
+
+    flag_plan_instance: bool = True
 
     def save_event(self):
+        self.flag_plan_instance = True
+        plan_instance = None
+        if self.spinBox_count_repeats.value() == 0:  # проверка является ли план дела повторяемым
+            plan_instance = onetime_instance()
+            self.fill_plan_instance(plan_instance)
+        else:
+            plan_instance = reusable_instance()
+            self.fill_plan_instance(plan_instance)
+            self.fill_plan_instance_repeat(plan_instance)
+        if self.flag_plan_instance:
+            self.save_plan_instance(plan_instance)
+            self.process_plan_instance(plan_instance)
+
+    def save_plan_instance(self, instance):
         pass
+
+    def process_plan_instance(self, instance):
+        pass
+
+    def fill_plan_instance(self, instance: onetime_instance):
+        instance.name = self.lineEdit_name.text()
+
+        date = self.dateEdit_date.date()
+        time_start = self.timeEdit_start.time()
+        time_end = self.timeEdit_end.time()
+        date_time = datetime.datetime(date.year(), date.month(), date.day(), time_start.hour(), time_start.minute())
+        instance.date = date
+        instance.time_from = time_start
+        instance.time_to = time_end
+        if date_time < datetime.datetime.now():
+            self.warning_message('Дата и время окончания события меньше, чем дата и время сейчас. Вы '
+                                 'уверены, что хотите создать событие в прошлом?')
+        if time_start >= time_end:
+            self.warning_message('Время окончания события меньше, чем время начала. Окончание события будет '
+                                 'перенесено на следующий день')
+        instance.tags = list(map(lambda x: x.strip(), self.lineEdit_tags.text().split(',')))
+        instance.description = self.textEdit_main.toPlainText()
+
+    def fill_plan_instance_repeat(self, instance: reusable_instance):
+        type = self.comboBox_gap.currentText()
+        instance.type = type
+        instance.gap = self.spinBox_count_repeats.value()
+        match type:
+            # case Gaps.day:
+            #     pass
+            case Gaps.week.value:
+                days_of_week = []
+                # value: QtWidgets.QCheckBox = None # TODO: разобраться можно ли указывать тип в цикле
+                for count, value in enumerate(self.list_checkboxes_week):
+                    if (value.isChecked()):
+                        days_of_week.append(count)
+                week_model = plan_manager.rm_week(days_of_week)
+                instance.repeat_model = week_model
+            case Gaps.month.value:
+                month_model = plan_manager.rm_month(self.checked_days_of_month)
+                instance.repeat_model = month_model
+            case Gaps.year.value:
+                year_model = plan_manager.rm_year(self.dateEdit_year.date())
+                instance.repeat_model = year_model
+
+
+    def warning_message(self, text, title='Подтвердите действие'):
+        error = QtWidgets.QMessageBox()
+        error.setText(text)
+        error.setWindowTitle(title)
+        error.setIcon(QMessageBox.Warning)
+        error.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        error.setDefaultButton(QMessageBox.No)
+        error.buttonClicked.connect(self.warning_message_event)
+
+        error.exec_()  # TODO: доделать логику всплывающего сообщения
+
+    def warning_message_event(self, btn): # TODO: эта пар*ша не работает
+        if btn.text() == 'Yes':
+            self.flag_plan_instance = True
+        elif btn.text() == 'No':
+            self.flag_plan_instance = False
 
     def delete_event(self):
-        pass
+        self.clear_fields()
 
     def today_event(self):
-        pass
+        date = datetime.date.today()
+        # date_str = date.strftime('%d.%m.%Y')
+        self.dateEdit_date.setDate(date)
 
     def tomorrow_event(self):
+        today = datetime.date.today()
+        date = datetime.date(today.year, today.month, today.day + 1)
+        self.dateEdit_date.setDate(date)
         pass

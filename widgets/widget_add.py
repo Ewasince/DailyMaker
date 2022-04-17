@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'widget_add.ui'
+# Form implementation generated from reading ui file '.\widgets\widget_add.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -57,7 +57,7 @@ class Ui_Form(object):
         self.label.setObjectName("label")
         self.spinBox_count_repeats = QtWidgets.QSpinBox(Form)
         self.spinBox_count_repeats.setGeometry(QtCore.QRect(550, 100, 42, 22))
-        self.spinBox_count_repeats.setMinimum(1)
+        self.spinBox_count_repeats.setMinimum(0)
         self.spinBox_count_repeats.setMaximum(100)
         self.spinBox_count_repeats.setObjectName("spinBox_count_repeats")
         self.comboBox_gap = QtWidgets.QComboBox(Form)
@@ -115,9 +115,9 @@ class Ui_Form(object):
         self.widget_year.setEnabled(True)
         self.widget_year.setGeometry(QtCore.QRect(460, 130, 281, 41))
         self.widget_year.setObjectName("widget_year")
-        self.dateEdit = QtWidgets.QDateEdit(self.widget_year)
-        self.dateEdit.setGeometry(QtCore.QRect(10, 10, 261, 22))
-        self.dateEdit.setObjectName("dateEdit")
+        self.dateEdit_year = QtWidgets.QDateEdit(self.widget_year)
+        self.dateEdit_year.setGeometry(QtCore.QRect(10, 10, 261, 22))
+        self.dateEdit_year.setObjectName("dateEdit_year")
         self.lineEdit_name.raise_()
         self.pushButton_save.raise_()
         self.pushButton_delete.raise_()
@@ -165,7 +165,7 @@ class Ui_Form(object):
         self.checkBox_endure.setToolTip(_translate("Form", "<html><head/><body><p>Переносить или удалять при выходе за рамки намеченного срока</p></body></html>"))
         self.checkBox_endure.setText(_translate("Form", "Переносить даты"))
         self.label_slider.setText(_translate("Form", "1"))
-        self.dateEdit.setDisplayFormat(_translate("Form", "dd.MM"))
+        self.dateEdit_year.setDisplayFormat(_translate("Form", "dd.MM"))
 
 
 if __name__ == "__main__":
