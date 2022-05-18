@@ -2,21 +2,22 @@ import datetime
 import enum
 
 
-class onetime_instance:
+class plan_event:
     name: str = None
     time_from: datetime.time = None
     time_to: datetime.time = None
     date: datetime.date = None
     tags: str = []
     description: str = None
+    repeat_model = None  # type: repeat_instance
 
     def __init__(self):
         pass
 
 
-class reusable_instance(onetime_instance):
+class repeat_instance:
     type = None  # type: Gaps
-    repeat_model = None
+    time_interval = None
     gap = None
 
     def __init__(self):
@@ -26,14 +27,20 @@ class reusable_instance(onetime_instance):
 class rm_week:
     days_week = {}
 
-    def __init__(self, *numbers):  # TODO: проверить как это говно работает или придумать что нибуль по-лучше
-        for i in range(7):
-            self.days_week[i] = False
-            if len(numbers) != 0:
-                for j in numbers:
-                    if j == i:
-                        self.days_week[i] = True
-                        break
+    def __init__(self, *numbers):
+        self.days_week = [False] * 7
+        if len(numbers) == 0:
+            return
+        list = numbers[0]
+        for i in list:
+            self.days_week[i] = True
+        # for i in range(7):
+        #     self.days_week[i] = False
+        #     if len(numbers) != 0:
+        #         for j in numbers:
+        #             if j == i:
+        #                 self.days_week[i] = True
+        #                 break
 
 
 class rm_month:

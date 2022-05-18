@@ -1,5 +1,5 @@
 import plan_manager
-from plan_manager import Gaps, onetime_instance, reusable_instance
+from plan_manager import Gaps, plan_event, repeat_instance
 
 from widgets.widget_add import Ui_Form
 from PyQt5 import QtWidgets
@@ -105,14 +105,10 @@ class Ui_Add(Ui_Form):
 
     def save_event(self):
         self.flag_plan_instance = True
-        plan_instance = None
-        if self.spinBox_count_repeats.value() == 0:  # проверка является ли план дела повторяемым
-            plan_instance = onetime_instance()
-            self.fill_plan_instance(plan_instance)
-        else:
-            plan_instance = reusable_instance()
-            self.fill_plan_instance(plan_instance)
-            self.fill_plan_instance_repeat(plan_instance)
+        plan_instance = plan_event()
+        self.fill_plan_instance(plan_instance)
+        if self.spinBox_count_repeats.value() != 0:  # проверка является ли план дела повторяемым
+            self.set_plan_repeat_model(plan_instance)
         if self.flag_plan_instance:
             self.save_plan_instance(plan_instance)
             self.process_plan_instance(plan_instance)
@@ -123,7 +119,7 @@ class Ui_Add(Ui_Form):
     def process_plan_instance(self, instance):
         pass
 
-    def fill_plan_instance(self, instance: onetime_instance):
+    def fill_plan_instance(self, instance: plan_event):
         instance.name = self.lineEdit_name.text()
 
         date = self.dateEdit_date.date()
@@ -142,10 +138,12 @@ class Ui_Add(Ui_Form):
         instance.tags = list(map(lambda x: x.strip(), self.lineEdit_tags.text().split(',')))
         instance.description = self.textEdit_main.toPlainText()
 
-    def fill_plan_instance_repeat(self, instance: reusable_instance):
+    def set_plan_repeat_model(self, instance: plan_event):
+        repeat_instance_ = repeat_instance()
+
         type = self.comboBox_gap.currentText()
-        instance.type = type
-        instance.gap = self.spinBox_count_repeats.value()
+        repeat_instance_.type = type
+        repeat_instance_.gap = self.spinBox_count_repeats.value()
         match type:
             # case Gaps.day:
             #     pass
@@ -156,13 +154,14 @@ class Ui_Add(Ui_Form):
                     if (value.isChecked()):
                         days_of_week.append(count)
                 week_model = plan_manager.rm_week(days_of_week)
-                instance.repeat_model = week_model
+                repeat_instance_.time_interval = week_model
             case Gaps.month.value:
                 month_model = plan_manager.rm_month(self.checked_days_of_month)
-                instance.repeat_model = month_model
+                repeat_instance_.time_interval = month_model
             case Gaps.year.value:
                 year_model = plan_manager.rm_year(self.dateEdit_year.date())
-                instance.repeat_model = year_model
+                repeat_instance_.time_interval = year_model
+        instance.repeat_model = repeat_instance_
 
 
     def warning_message(self, text, title='Подтвердите действие'):
