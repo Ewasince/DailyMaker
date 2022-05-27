@@ -113,6 +113,7 @@ class Ui_Add(Ui_Form):
             self.save_plan_instance(plan_instance)
             self.process_plan_instance(plan_instance)
 
+
     def save_plan_instance(self, instance):
         pass
 
