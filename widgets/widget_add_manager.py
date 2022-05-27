@@ -67,8 +67,8 @@ class Ui_Add(Ui_Form):
     def set_default(self):
         self.today_event()
         now = datetime.datetime.now()
-        self.timeEdit_start.setTime(datetime.time(now.hour + 1))
-        self.timeEdit_end.setTime(datetime.time(now.hour + 2))
+        self.timeEdit_start.setTime(datetime.time((now.hour + 1) % 24))
+        self.timeEdit_end.setTime(datetime.time((now.hour + 2) % 24))
         self.dateEdit_year.setDate(datetime.date.today())
 
     def comboBox_event(self):
@@ -112,6 +112,8 @@ class Ui_Add(Ui_Form):
         if self.flag_plan_instance:
             self.save_plan_instance(plan_instance)
             self.process_plan_instance(plan_instance)
+
+        sql_manager = plan_manager.
 
 
     def save_plan_instance(self, instance):
