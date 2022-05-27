@@ -1,5 +1,6 @@
 import plan_manager
 from plan_manager import Gaps, plan_event, repeat_instance
+import db_manager
 
 from widgets.widget_add import Ui_Form
 from PyQt5 import QtWidgets
@@ -113,10 +114,9 @@ class Ui_Add(Ui_Form):
             self.save_plan_instance(plan_instance)
             self.process_plan_instance(plan_instance)
 
-        sql_manager = plan_manager.
-
-
     def save_plan_instance(self, instance):
+        save_manager = db_manager.save_manager()
+        save_manager.save_event(instance)
         pass
 
     def process_plan_instance(self, instance):

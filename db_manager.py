@@ -13,7 +13,7 @@ repeat_model_days
 repeat_model_year
 '''
 
-class save_events():
+class save_manager():
     name_db = 'events.db'
 
     def __init__(self):
@@ -87,7 +87,7 @@ class save_events():
                     print("Соединение с SQLite закрыто")
         pass
 
-    def add_event(self, event: plan_event):
+    def save_event(self, event: plan_event):
         try:
             connection = sqlite3.connect(self.name_db)
             with connection:
@@ -100,7 +100,7 @@ class save_events():
                 else:
                     is_repetable = 0
                 query_event = f'''INSERT INTO events
-                (name, description, is_repetable INTEGER)
+                (name, description, is_repetable)
                 VALUES ({event.name}, {event.description}, {is_repetable});'''
                 cursor.execute(query_event)
                 id = cursor.lastrowid
@@ -126,15 +126,25 @@ class save_events():
                 '''
                 cursor.execute(query_date)
 
-                # tag_tuple =
                 tag_tuple = list(map(lambda x: (id, x), event.tags))
-                # cursor.executemany('''INSERT INTO tags
-                # (id, value)
-                # VALUES (?,?)''', data_person_name)
-                pass
+                query_tags = '''INSERT INTO tags
+                (id, value)
+                VALUES (?,?)'''
+                cursor.executemany(query_tags, tag_tuple)
 
-                record = cursor.fetchall()
-                print("Версия базы данных SQLite: ", record)
+                if event.type != None
+                    match event.type:
+                        case Gaps.day: # TODO: доделать логиу сохранения peat_model
+                            pass
+                        case Gaps.week.value:
+                            pass
+                        case Gaps.month.value:
+                            pass
+                        case Gaps.year.value:
+                            pass
+
+                # record = cursor.fetchall()
+                # print("Версия базы данных SQLite: ", record)
         except sqlite3.Error as error:
             print("Ошибка при подключении к sqlite", error)
         finally:
