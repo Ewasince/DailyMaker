@@ -1,5 +1,6 @@
 from widgets.widget_analytics import Ui_Form
 from PyQt5 import QtWidgets
+from db_manager import load_manager
 
 
 class Ui_Analytics(Ui_Form):

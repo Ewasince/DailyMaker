@@ -2,6 +2,8 @@ import sqlite3
 import numpy as np
 from plan_manager import *
 
+import datetime
+
 '''Названия таблиц:
 events
 time_from
@@ -170,6 +172,9 @@ class save_manager():
                 print("Соединение с SQLite закрыто")
 
 class load_manager():
+    from PyQt5.QtCore import QDate
+    from PyQt5.QtCore import QTime
+
     db_flag = True
     def __init__(self):
         try:
@@ -179,5 +184,60 @@ class load_manager():
             print('Файл базы данных не обнаружен')
             self.db_flag = False
 
-    def load_events(self, a):
-        pass
+    def find_events(self, connection, date_from: QDate, date_to: QDate,
+                    time_from: QTime, time_to: QTime):
+        cursor = connection.cursor()
+        print("Успешно подключено к SQLite")
+
+        query_find_date = f'''SELECT DISTINCT id FROM date WHERE
+         year BETWEEN {date_from.year()} AND {date_to.year()} AND
+         month BETWEEN {date_from.month()} AND {date_to.month()} AND
+         day BETWEEN {date_from.day()} AND {date_to.day()}
+         '''
+        cursor.execute(query_find_date)
+
+        dates_ids_tuples = cursor.fetchall()
+        dates_ids_set = list(map(lambda x: str(x[0]), dates_ids_tuples))
+        string_ids = '(' + ', '.join(dates_ids_set) + ')'
+        query_find_time = f'''SELECT DISTINCT id from time_from WHERE
+        id IN {string_ids} AND
+        hour BETWEEN {time_from.hour()} AND {time_to.hour()} AND
+        minute BETWEEN {time_from.minute()} AND {time_to.minute()};
+        '''
+        cursor.execute(query_find_time)
+
+        time_ids_tuples = cursor.fetchall()
+        time_ids_set = list(map(lambda x: x[0], time_ids_tuples))
+
+        return time_ids_set
+
+    def load_events(self, date_from: QDate, date_to: QDate,
+                    time_from: QTime, time_to: QTime):
+
+        connection = sqlite3.connect(name_db)
+        with connection:
+            cursor = connection.cursor()
+            events_id_int = self.find_events(connection, date_from, date_to, time_from, time_to)
+            events_id_str = '(' + ', '.join(map(lambda x: str(x), events_id_int)) + ')'
+
+            query_events = f'''SELECT * FROM events WHERE id IN {events_id_str} ORDER BY id'''
+            cursor.execute(query_events)
+            events_raw = cursor.fetchall()
+
+            query_time_from = f'''SELECT * FROM time_from WHERE id IN {events_id_str} ORDER BY id'''
+            cursor.execute(query_time_from)
+            time_from_raw = cursor.fetchall()
+
+            query_time_to = f'''SELECT * FROM time_to WHERE id IN {events_id_str} ORDER BY id'''
+            cursor.execute(query_time_to)
+            time_to_raw = cursor.fetchall()
+
+            query_date = f'''SELECT * FROM date WHERE id IN {events_id_str} ORDER BY id'''
+            cursor.execute(query_date)
+            date_raw = cursor.fetchall()
+
+            query_repeat_models = f'''SELECT * FROM repeat_models'''
+            cursor.execute(query_repeat_models)
+            repeat_models_raw = cursor.fetchall()
+
+            pass

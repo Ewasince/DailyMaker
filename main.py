@@ -1,4 +1,6 @@
 from main_window import Ui_MainWindow
+# from first_tab import Ui_MainWindow
+# import first_tab
 
 from widgets.widget_schedule_manager import Ui_Schedule
 from widgets.widget_add_manager import Ui_Add
