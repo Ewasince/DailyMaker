@@ -13,9 +13,9 @@ repeat_model_days
 repeat_model_year
 '''
 
-class save_manager():
-    name_db = 'events.db'
+name_db = 'events.db'
 
+class save_manager():
     def __init__(self):
         try:
             with open(self.name_db, 'r') as f:
@@ -23,7 +23,7 @@ class save_manager():
         except Exception as e:
             print('Файл базы данных не обнаружен, создание...')
             try:
-                connection = sqlite3.connect(self.name_db)
+                connection = sqlite3.connect(name_db)
                 cursor = connection.cursor()
 
                 query_table_events = '''CREATE TABLE events(
@@ -89,8 +89,9 @@ class save_manager():
 
     def save_event(self, event: plan_event):
         try:
-            connection = sqlite3.connect(self.name_db)
+            connection = sqlite3.connect(name_db)
             with connection:
+                # test_date = datetime.
                 cursor = connection.cursor()
                 print("Успешно подключено к SQLite")
 
@@ -101,66 +102,82 @@ class save_manager():
                     is_repetable = 0
                 query_event = f'''INSERT INTO events
                 (name, description, is_repetable)
-                VALUES ({event.name}, {event.description}, {is_repetable});'''
+                VALUES ('{event.name}', '{event.description}', {is_repetable});'''
                 cursor.execute(query_event)
                 id = cursor.lastrowid
 
                 time = event.time_from
                 query_time_from = f'''INSERT INTO time_from
                 (id, hour, minute)
-                VALUES ({id}, {time.hour}, {time.minute})
+                VALUES ({id}, {time.hour()}, {time.minute()})
                 '''
                 cursor.execute(query_time_from)
 
                 time = event.time_to
                 query_time_to = f'''INSERT INTO time_to
                 (id, hour, minute)
-                VALUES ({id}, {time.hour}, {time.minute})
+                VALUES ({id}, {time.hour()}, {time.minute()})
                 '''
                 cursor.execute(query_time_to)
 
                 date = event.date
                 query_date = f'''INSERT INTO date
                 (id, year, month, day)
-                VALUES ({id}, {date.year}, {date.day})
+                VALUES ({id}, {date.year()}, {date.month()},{date.day()})
                 '''
                 cursor.execute(query_date)
 
-                tag_tuple = list(map(lambda x: (id, x), event.tags))
+                tag_set = set(event.tags)
+                tag_tuple = list(map(lambda x: (id, x), tag_set))
                 query_tags = '''INSERT INTO tags
                 (id, value)
                 VALUES (?,?)'''
                 cursor.executemany(query_tags, tag_tuple)
 
-                if event.type != None:
+                if event.repeat_model != None:
                     repeat_inst = event.repeat_model
                     query_repeat_model = f'''INSERT INTO repeat_model
                     (id, type, interval)
-                    VALUES ({id}, {repeat_inst.type}, {repeat_inst.gap})
+                    VALUES ({id}, '{repeat_inst.type}', {repeat_inst.gap})
                     '''
+                    cursor.execute(query_repeat_model)
                     time_interval = event.repeat_model.time_interval
-                    match event.type:
+                    match event.repeat_model.type:
                         case Gaps.week.value:
-                            day_tuple = list(map(lambda x: (id, x), time_interval.days_week))
+                            day_tuple = list(map(lambda x: (id, x), time_interval.days_week[0]))
                             query_days = '''INSERT INTO repeat_model_days
-                                            (id, value)
+                                            (id, day)
                                             VALUES (?,?)'''
                             cursor.executemany(query_days, day_tuple)
                         case Gaps.month.value:
-                            day_tuple = list(map(lambda x: (id, x), time_interval.days_month))
+                            day_tuple = list(map(lambda x: (id, x), time_interval.days_month[0]))
                             query_days = '''INSERT INTO repeat_model_days
-                                            (id, value)
+                                            (id, day)
                                             VALUES (?,?)'''
                             cursor.executemany(query_days, day_tuple)
                         case Gaps.year.value:
                             date_ = time_interval.date
                             query_day_month = f'''INSERT INTO repeat_model_year
                                             (id, day, month)
-                                            VALUES ({id},{date_.day}, {date_.month})'''
+                                            VALUES ({id},{date_.day()}, {date_.month()})'''
                             cursor.execute(query_day_month)
+                connection.commit()
         except sqlite3.Error as error:
             print("Ошибка при подключении к sqlite", error)
         finally:
             if (connection):
                 connection.close()
                 print("Соединение с SQLite закрыто")
+
+class load_manager():
+    db_flag = True
+    def __init__(self):
+        try:
+            with open(self.name_db, 'r'):
+                pass
+        except Exception as e:
+            print('Файл базы данных не обнаружен')
+            self.db_flag = False
+
+    def load_events(self, a):
+        pass
