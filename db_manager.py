@@ -191,7 +191,7 @@ class load_manager():
             self.db_flag = False
 
     def find_events(self, date_from: QDate, date_to: QDate,
-                    time_from: QTime, time_to: QTime, connection=None) -> tuple:
+                    time_from: QTime, time_to: QTime, connection=None) -> list:
         flag_connection = False
         try:
             if connection is None:
@@ -199,10 +199,13 @@ class load_manager():
                 flag_connection = True
             cursor = connection.cursor()
             print("Успешно подключено к SQLite")
-
+            month_from = date_from.month()
+            month_to = date_to.month()
+            day_from = date_from.day()
+            day_to = date_to.day() # TODO: БЛЯТЬ! даты неправильно выбираются
             query_find_date = f'''SELECT DISTINCT id FROM date WHERE
              year BETWEEN {date_from.year()} AND {date_to.year()} AND
-             month BETWEEN {date_from.month()} AND {date_to.month()} AND
+             month BETWEEN {} AND {date_to.month()} AND
              day BETWEEN {date_from.day()} AND {date_to.day()}
              '''
             cursor.execute(query_find_date)
@@ -228,7 +231,7 @@ class load_manager():
                 connection.close()
 
     def load_events(self, date_from: QDate, date_to: QDate,
-                    time_from: QTime, time_to: QTime, connection=None) -> tuple:
+                    time_from: QTime, time_to: QTime, connection=None) -> list:
         flag_connection = False
         try:
             if connection is None:
@@ -346,7 +349,7 @@ class load_manager():
                             next_date = next_date.addYears(rm_interval)
                 connection.commit()
 
-            events_id_int = self.find_events(connection, date_from, date_to, time_from, time_to)
+            events_id_int = self.find_events(date_from, date_to, time_from, time_to, connection)
             events_id_str = '(' + ', '.join(map(lambda x: str(x), events_id_int)) + ')'
 
             query_events = f'''SELECT * FROM events WHERE id IN {events_id_str} ORDER BY id'''
@@ -375,13 +378,11 @@ class load_manager():
                 event.time_to = QTime(time_to_raw[n][1], time_to_raw[n][2], time_to_raw[n][3])
                 event.date = QDate(date_raw[n][1], date_raw[n][2])
 
-                # query_tags = f'''SELECT * FROM tags WHERE id IN {events_id_str} ORDER BY id'''
-                # cursor.execute(query_date)
-                # date_raw = cursor.fetchall()
-
-            pass
+                events.append(event)
+            return events
         except Exception as e:
             print('Загрузка не удалась по причине ', e)
+            return []
         finally:
             if flag_connection and connection:
                 connection.close()

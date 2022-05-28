@@ -24,5 +24,6 @@ class Ui_Schedule(Ui_Form):
         date_to = QDate(2022, 6, 15)
         time_from = QTime(0, 0)
         time_to = QTime(23, 59)
-        manager.load_events(date_from, date_to, time_from, time_to)
+        test = manager.load_events(date_from, date_to, time_from, time_to)
+        pass
 
