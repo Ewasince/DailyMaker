@@ -3,6 +3,7 @@ import enum
 
 
 class plan_event:
+    id: int = 0
     name: str = None
     time_from: datetime.time = None
     time_to: datetime.time = None

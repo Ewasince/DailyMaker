@@ -189,7 +189,7 @@ class load_manager():
             self.db_flag = False
 
     def find_events(self, date_from: QDate, date_to: QDate,
-                    time_from: QTime, time_to: QTime, connection=None):
+                    time_from: QTime, time_to: QTime, connection=None) -> tuple:
         flag_connection = False
         try:
             if connection is None:
@@ -226,7 +226,7 @@ class load_manager():
                 connection.close()
 
     def load_events(self, date_from: QDate, date_to: QDate,
-                    time_from: QTime, time_to: QTime, connection=None):
+                    time_from: QTime, time_to: QTime, connection=None) -> tuple:
         flag_connection = False
         try:
             if connection is None:
@@ -361,6 +361,20 @@ class load_manager():
             query_date = f'''SELECT * FROM date WHERE id IN {events_id_str} ORDER BY id'''
             cursor.execute(query_date)
             date_raw = cursor.fetchall()
+
+            events = list()
+            for n, i in enumerate(events_raw):
+                event = plan_event()
+                event.id = i[0]
+                event.name = i[1]
+                event.description = i[2]
+                event.time_from = QTime(time_from_raw[n][1], time_from_raw[n][2], time_from_raw[n][3])
+                event.time_to = QTime(time_to_raw[n][1], time_to_raw[n][2], time_to_raw[n][3])
+                event.date = QDate(date_raw[n][1], date_raw[n][2])
+
+                # query_tags = f'''SELECT * FROM tags WHERE id IN {events_id_str} ORDER BY id'''
+                # cursor.execute(query_date)
+                # date_raw = cursor.fetchall()
 
             pass
         except Exception as e:
