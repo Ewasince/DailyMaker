@@ -19,7 +19,7 @@ class plan_event:
 class repeat_instance:
     type = None  # type: Gaps
     time_interval = None
-    gap = None
+    gap = None # type: rm_week, rm_month, rm_year
 
     def __init__(self):
         super().__init__()
@@ -29,26 +29,29 @@ class rm_week:
     days_week = {}
 
     def __init__(self, *numbers):
-        self.days_week = [False] * 7
-        if len(numbers) == 0:
-            return
-        list = numbers[0]
-        for i in list:
-            self.days_week[i] = True
+        # self.days_week = [False] * 7
+        # if len(numbers) == 0:
+        #     return
+        # list = numbers[0]
+        # for i in list:
+        #     self.days_week[i] = True
+        self.days_week = numbers
 
 
 class rm_month:
     days_month = {}
     isEndure = False
 
-    def __init__(self, *numbers):
-        for i in range(31):
-            self.days_month[i] = False
-            if len(numbers) != 0:
-                for j in numbers:
-                    if j == i:
-                        self.days_month[i] = True
-                        break
+    def __init__(self, isEndure, *numbers):
+        # for i in range(31):
+        #     self.days_month[i] = False
+        #     if len(numbers) != 0:
+        #         for j in numbers:
+        #             if j == i:
+        #                 self.days_month[i] = True
+        #                 break
+        self.days_month = numbers
+        self.isEndure = isEndure
 
 
 class rm_year:

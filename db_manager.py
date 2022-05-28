@@ -132,19 +132,32 @@ class save_manager():
                 VALUES (?,?)'''
                 cursor.executemany(query_tags, tag_tuple)
 
-                if event.type != None
+                if event.type != None:
+                    repeat_inst = event.repeat_model
+                    query_repeat_model = f'''INSERT INTO repeat_model
+                    (id, type, interval)
+                    VALUES ({id}, {repeat_inst.type}, {repeat_inst.gap})
+                    '''
+                    time_interval = event.repeat_model.time_interval
                     match event.type:
-                        case Gaps.day: # TODO: доделать логиу сохранения peat_model
-                            pass
                         case Gaps.week.value:
-                            pass
+                            day_tuple = list(map(lambda x: (id, x), time_interval.days_week))
+                            query_days = '''INSERT INTO repeat_model_days
+                                            (id, value)
+                                            VALUES (?,?)'''
+                            cursor.executemany(query_days, day_tuple)
                         case Gaps.month.value:
-                            pass
+                            day_tuple = list(map(lambda x: (id, x), time_interval.days_month))
+                            query_days = '''INSERT INTO repeat_model_days
+                                            (id, value)
+                                            VALUES (?,?)'''
+                            cursor.executemany(query_days, day_tuple)
                         case Gaps.year.value:
-                            pass
-
-                # record = cursor.fetchall()
-                # print("Версия базы данных SQLite: ", record)
+                            date_ = time_interval.date
+                            query_day_month = f'''INSERT INTO repeat_model_year
+                                            (id, day, month)
+                                            VALUES ({id},{date_.day}, {date_.month})'''
+                            cursor.execute(query_day_month)
         except sqlite3.Error as error:
             print("Ошибка при подключении к sqlite", error)
         finally:
