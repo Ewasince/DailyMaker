@@ -18,6 +18,7 @@ repeat_model_year
 
 name_db = 'events.db'
 
+
 class save_manager():
     def __init__(self):
         try:
@@ -90,7 +91,7 @@ class save_manager():
                     print("Соединение с SQLite закрыто")
         pass
 
-    def save_event(self, event: plan_event, connection = None):
+    def save_event(self, event: plan_event, connection=None):
         flag_connection = False
         try:
             if connection is None:
@@ -173,10 +174,12 @@ class save_manager():
                 connection.close()
                 print("Соединение с SQLite закрыто")
 
+
 class load_manager():
     from PyQt5.QtCore import QDate, QTime
 
     db_flag = True
+
     def __init__(self):
         try:
             with open(self.name_db, 'r'):
@@ -245,7 +248,7 @@ class load_manager():
                 query_last_entry_date = f'''SELECT * from date WHERE id IN {query_events_rm_str} AND
                 day = (SELECT MAX(day) FROM date WHERE id IN {query_events_rm_str} AND
                 month = (SELECT MAX(month) FROM date WHERE id IN {query_events_rm_str} AND
-                year = (SELECT MAX(year) FROM date WHERE id IN {query_events_rm_str})))''' # TODO: оптимизировать!
+                year = (SELECT MAX(year) FROM date WHERE id IN {query_events_rm_str})))'''  # TODO: оптимизировать!
                 cursor.execute(query_last_entry_date)
                 last_entry_date = cursor.fetchall()[0]
 
@@ -265,7 +268,6 @@ class load_manager():
                 cursor.execute(query_last_entry_tags)
                 last_entry_tags = cursor.fetchall()[0]
 
-
                 e_event = plan_event()
                 e_event.name = last_entry_event[1]
                 e_event.description = last_entry_event[2]
@@ -275,23 +277,71 @@ class load_manager():
                 e_event.tags = last_entry_tags
 
                 pass
-
-                match i[1]:
+                rm_type = i[1]
+                rm_interval = i[2]
+                match rm_type:
                     case Gaps.day.value:
-                        interval = i[2]
                         next_date = QDate(e_event.date.year(),
                                           e_event.date.month(),
-                                          e_event.date.day() + interval)
+                                          e_event.date.day())
+                        next_date.addDays(rm_interval)
                         while date_to > next_date:
                             self.create_event(cursor, e_event, rm_id, next_date)
-                            next_date = QDate(next_date.year(), next_date.month(), next_date.day() + interval)
-                        pass
+                            next_date.addDays(rm_interval)
                     case Gaps.week.value:
-                        pass
+                        next_date = QDate(e_event.date.year(),
+                                          e_event.date.month(),
+                                          e_event.date.day())
+                        next_date.addDays(rm_interval * 7)
+                        while date_to > next_date:
+                            query_days = f'''SELECT day FROM repeat_model_days WHERE id = {rm_id}'''
+                            cursor.execute(query_days)
+                            days = cursor.fetchall()
+
+                            next_date_ = QDate(next_date.year(), next_date.month(), next_date.day())
+                            for j in range(7):
+                                next_date_.addDays(j)
+                                try:
+                                    days.index(next_date_.dayOfWeek())
+                                    self.create_event(cursor, e_event, rm_id, next_date_)
+                                except:
+                                    pass
+                            next_date.addDays(rm_interval * 7)
                     case Gaps.month.value:
-                        pass
+                        next_date = QDate(e_event.date.year(),
+                                          e_event.date.month(),
+                                          e_event.date.day())
+                        next_date.addMonths(rm_interval)
+                        # while date_to > next_date:
+                        #     self.create_event(cursor, e_event, rm_id, next_date)
+                        #     next_date.addDays(rm_interval)
+                        while date_to > next_date:
+                            query_days = f'''SELECT day FROM repeat_model_days WHERE id = {rm_id}'''
+                            cursor.execute(query_days)
+                            days = cursor.fetchall()
+
+                            next_date_ = QDate(next_date.year(), next_date.month(), next_date.day())
+                            for j in range(31):
+                                next_date_.addDays(j)
+                                try:
+                                    days.index(next_date_.daysInMonth())
+                                    self.create_event(cursor, e_event, rm_id, next_date_)
+                                except:
+                                    pass
+                            next_date.addMonths(rm_interval)
                     case Gaps.year.value:
-                        pass
+                        next_date = QDate(e_event.date.year(),
+                                          e_event.date.month(),
+                                          e_event.date.day())
+                        next_date.addYears(rm_interval)
+                        while date_to > next_date:
+                            query_year = f'''SELECT day, month FROM repeat_model_year WHERE id = {rm_id}'''
+                            cursor.execute(query_year)
+                            year_days = cursor.fetchall()[0]
+                            next_date_ = QDate(next_date.year(), year_days[1], year_days[0])
+
+                            self.create_event(cursor, e_event, rm_id, next_date_)
+                            next_date.addYears(rm_interval)
 
             events_id_int = self.find_events(connection, date_from, date_to, time_from, time_to)
             events_id_str = '(' + ', '.join(map(lambda x: str(x), events_id_int)) + ')'
@@ -311,7 +361,6 @@ class load_manager():
             query_date = f'''SELECT * FROM date WHERE id IN {events_id_str} ORDER BY id'''
             cursor.execute(query_date)
             date_raw = cursor.fetchall()
-
 
             pass
         except Exception as e:

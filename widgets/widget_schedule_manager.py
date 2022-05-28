@@ -21,7 +21,7 @@ class Ui_Schedule(Ui_Form):
 
         manager = load_manager()
         date_from = QDate(2022, 5, 28)
-        date_to = QDate(2022, 5, 31)
+        date_to = QDate(2022, 6, 15)
         time_from = QTime(0, 0)
         time_to = QTime(23, 59)
         manager.load_events(date_from, date_to, time_from, time_to)
