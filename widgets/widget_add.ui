@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>750</width>
-    <height>580</height>
+    <width>1130</width>
+    <height>631</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -22,17 +22,25 @@
   <widget class="QLineEdit" name="lineEdit_name">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>441</width>
+     <x>40</x>
+     <y>80</y>
+     <width>621</width>
      <height>20</height>
     </rect>
    </property>
    <property name="toolTip">
     <string/>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(63, 75, 90);
+font: 10pt &quot;Microsoft YaHei UI&quot;;;
+color: rgb(255, 255, 255);</string>
+   </property>
    <property name="text">
     <string comment="testest" extracomment="test"/>
+   </property>
+   <property name="frame">
+    <bool>false</bool>
    </property>
    <property name="dragEnabled">
     <bool>false</bool>
@@ -44,11 +52,16 @@
   <widget class="QPushButton" name="pushButton_save">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>10</y>
-     <width>131</width>
+     <x>690</x>
+     <y>80</y>
+     <width>191</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(63, 75, 90);
+font: 10pt &quot;Microsoft YaHei UI&quot;;;
+color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>Сохранить</string>
@@ -57,11 +70,16 @@
   <widget class="QPushButton" name="pushButton_delete">
    <property name="geometry">
     <rect>
-     <x>610</x>
-     <y>10</y>
-     <width>131</width>
+     <x>910</x>
+     <y>80</y>
+     <width>181</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(63, 75, 90);
+font: 10pt &quot;Microsoft YaHei UI&quot;;;
+color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>Удалить</string>
@@ -70,11 +88,19 @@
   <widget class="QTimeEdit" name="timeEdit_start">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>40</y>
-     <width>221</width>
+     <x>40</x>
+     <y>120</y>
+     <width>291</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(63, 75, 90);
+font: 10pt &quot;Microsoft YaHei UI&quot;;;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="frame">
+    <bool>false</bool>
    </property>
    <property name="time">
     <time>
@@ -87,11 +113,19 @@
   <widget class="QTimeEdit" name="timeEdit_end">
    <property name="geometry">
     <rect>
-     <x>240</x>
-     <y>40</y>
-     <width>211</width>
+     <x>360</x>
+     <y>120</y>
+     <width>301</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(63, 75, 90);
+font: 10pt &quot;Microsoft YaHei UI&quot;;;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="frame">
+    <bool>false</bool>
    </property>
    <property name="time">
     <time>
@@ -104,11 +138,16 @@
   <widget class="QPushButton" name="pushButton_today">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>40</y>
-     <width>131</width>
+     <x>690</x>
+     <y>120</y>
+     <width>191</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(63, 75, 90);
+font: 10pt &quot;Microsoft YaHei UI&quot;;;
+color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>На сегодня</string>
@@ -117,11 +156,16 @@
   <widget class="QPushButton" name="pushButton_tomorrow">
    <property name="geometry">
     <rect>
-     <x>610</x>
-     <y>40</y>
-     <width>131</width>
+     <x>910</x>
+     <y>120</y>
+     <width>181</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(63, 75, 90);
+font: 10pt &quot;Microsoft YaHei UI&quot;;;
+color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>На завтра</string>
@@ -130,11 +174,19 @@
   <widget class="QDateEdit" name="dateEdit_date">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>70</y>
-     <width>281</width>
+     <x>690</x>
+     <y>160</y>
+     <width>401</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(63, 75, 90);
+font: 10pt &quot;Microsoft YaHei UI&quot;;;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="frame">
+    <bool>false</bool>
    </property>
    <property name="dateTime">
     <datetime>
@@ -150,11 +202,19 @@
   <widget class="QLineEdit" name="lineEdit_tags">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>70</y>
-     <width>441</width>
+     <x>40</x>
+     <y>160</y>
+     <width>621</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(63, 75, 90);
+font: 10pt &quot;Microsoft YaHei UI&quot;;;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="frame">
+    <bool>false</bool>
    </property>
    <property name="placeholderText">
     <string>Тэги, через запятую</string>
@@ -163,19 +223,27 @@
   <widget class="QTextEdit" name="textEdit_main">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>100</y>
-     <width>441</width>
-     <height>471</height>
+     <x>40</x>
+     <y>200</y>
+     <width>621</width>
+     <height>401</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(63, 75, 90);
+font: 10pt &quot;Microsoft YaHei UI&quot;;;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
    </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>100</y>
-     <width>91</width>
+     <x>690</x>
+     <y>200</y>
+     <width>121</width>
      <height>16</height>
     </rect>
    </property>
@@ -186,11 +254,19 @@
   <widget class="QSpinBox" name="spinBox_count_repeats">
    <property name="geometry">
     <rect>
-     <x>550</x>
-     <y>100</y>
-     <width>42</width>
+     <x>810</x>
+     <y>200</y>
+     <width>71</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(63, 75, 90);
+font: 10pt &quot;Microsoft YaHei UI&quot;;;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="frame">
+    <bool>false</bool>
    </property>
    <property name="minimum">
     <number>0</number>
@@ -202,17 +278,25 @@
   <widget class="QComboBox" name="comboBox_gap">
    <property name="geometry">
     <rect>
-     <x>600</x>
-     <y>100</y>
-     <width>141</width>
+     <x>900</x>
+     <y>200</y>
+     <width>191</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(63, 75, 90);
+font: 10pt &quot;Microsoft YaHei UI&quot;;;
+color: rgb(255, 255, 255);</string>
    </property>
    <property name="currentText">
     <string>дня</string>
    </property>
    <property name="currentIndex">
     <number>0</number>
+   </property>
+   <property name="frame">
+    <bool>false</bool>
    </property>
    <item>
     <property name="text">
@@ -241,10 +325,10 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>130</y>
-     <width>281</width>
-     <height>41</height>
+     <x>690</x>
+     <y>230</y>
+     <width>400</width>
+     <height>61</height>
     </rect>
    </property>
    <widget class="QCheckBox" name="checkBox_mo">
@@ -256,6 +340,9 @@
       <height>17</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="text">
      <string>Пн</string>
     </property>
@@ -263,7 +350,7 @@
    <widget class="QCheckBox" name="checkBox_tu">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>60</x>
       <y>10</y>
       <width>41</width>
       <height>17</height>
@@ -276,7 +363,7 @@
    <widget class="QCheckBox" name="checkBox_we">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>120</x>
       <y>10</y>
       <width>41</width>
       <height>17</height>
@@ -289,7 +376,7 @@
    <widget class="QCheckBox" name="checkBox_th">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>180</x>
       <y>10</y>
       <width>41</width>
       <height>17</height>
@@ -302,7 +389,7 @@
    <widget class="QCheckBox" name="checkBox_fr">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>240</x>
       <y>10</y>
       <width>31</width>
       <height>17</height>
@@ -315,7 +402,7 @@
    <widget class="QCheckBox" name="checkBox_sa">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>300</x>
       <y>10</y>
       <width>41</width>
       <height>17</height>
@@ -328,7 +415,7 @@
    <widget class="QCheckBox" name="checkBox_su">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>360</x>
       <y>10</y>
       <width>31</width>
       <height>17</height>
@@ -345,9 +432,9 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>130</y>
-     <width>281</width>
+     <x>690</x>
+     <y>230</y>
+     <width>400</width>
      <height>61</height>
     </rect>
    </property>
@@ -369,7 +456,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>241</width>
+      <width>301</width>
       <height>22</height>
      </rect>
     </property>
@@ -386,7 +473,7 @@
    <widget class="QCheckBox" name="checkBox_endure">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>270</x>
       <y>40</y>
       <width>111</width>
       <height>17</height>
@@ -402,7 +489,7 @@
    <widget class="QLabel" name="label_slider">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>340</x>
       <y>10</y>
       <width>47</width>
       <height>13</height>
@@ -419,10 +506,10 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>130</y>
-     <width>281</width>
-     <height>41</height>
+     <x>690</x>
+     <y>230</y>
+     <width>400</width>
+     <height>61</height>
     </rect>
    </property>
    <widget class="QDateEdit" name="dateEdit_year">
@@ -430,14 +517,78 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>261</width>
+      <width>381</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(63, 75, 90);
+font: 10pt &quot;Microsoft YaHei UI&quot;;;
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="frame">
+     <bool>false</bool>
     </property>
     <property name="displayFormat">
      <string>dd.MM</string>
     </property>
    </widget>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>35</x>
+     <y>25</y>
+     <width>378</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>30</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>400</width>
+     <height>30</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);
+font: 20pt &quot;Microsoft YaHei UI&quot;;</string>
+   </property>
+   <property name="text">
+    <string>Добавление активности</string>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="wordWrap">
+    <bool>false</bool>
+   </property>
+   <property name="openExternalLinks">
+    <bool>false</bool>
+   </property>
   </widget>
   <zorder>lineEdit_name</zorder>
   <zorder>pushButton_save</zorder>
@@ -455,6 +606,7 @@
   <zorder>widget_week</zorder>
   <zorder>widget_year</zorder>
   <zorder>widget_month</zorder>
+  <zorder>label_2</zorder>
  </widget>
  <resources/>
  <connections/>

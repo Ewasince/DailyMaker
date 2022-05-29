@@ -121,7 +121,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-import ico.icons
+import icons_rc
 
 
 if __name__ == "__main__":
