@@ -17,11 +17,11 @@ class Ui_Schedule(Ui_Form):
         from PyQt5.QtCore import QDate
         from PyQt5.QtCore import QTime
 
-        # save_manager_ = Save_manager()
+        save_manager_ = Save_manager()
 
-        manager = Load_manager()
-        date_from = QDate(2022, 5, 28)
-        date_to = QDate(2022, 6, 15)
-        test = manager.load_events(date_from, date_to)
-        pass
+        # manager = Load_manager()
+        # date_from = QDate(2022, 5, 28)
+        # date_to = QDate(2022, 6, 15)
+        # test = manager.load_events(date_from, date_to)
+        # pass
 

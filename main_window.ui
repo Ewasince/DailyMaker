@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>810</width>
-    <height>601</height>
+    <width>1200</width>
+    <height>631</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -16,19 +19,58 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>1200</width>
+    <height>631</height>
+   </size>
+  </property>
   <property name="maximumSize">
    <size>
-    <width>810</width>
-    <height>601</height>
+    <width>1200</width>
+    <height>631</height>
    </size>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>1200</width>
+    <height>610</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Segoe Print</family>
+    <pointsize>10</pointsize>
+    <weight>50</weight>
+    <bold>false</bold>
+    <stylestrategy>PreferDefault</stylestrategy>
+   </font>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <property name="animated">
+   <bool>true</bool>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="sizePolicy">
     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
      <horstretch>0</horstretch>
@@ -37,20 +79,63 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>810</width>
-     <height>580</height>
+     <width>1200</width>
+     <height>631</height>
     </size>
    </property>
-   <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="maximumSize">
+    <size>
+     <width>1200</width>
+     <height>631</height>
+    </size>
+   </property>
+   <property name="baseSize">
+    <size>
+     <width>1200</width>
+     <height>631</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <weight>50</weight>
+     <bold>false</bold>
+     <strikeout>false</strikeout>
+    </font>
+   </property>
+   <property name="mouseTracking">
+    <bool>false</bool>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(90, 108, 131);</string>
+   </property>
+   <widget class="QWidget" name="leftLayout" native="true">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>0</y>
-      <width>52</width>
-      <height>581</height>
+      <width>81</width>
+      <height>631</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(75, 90, 108);</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetNoConstraint</enum>
+     </property>
      <item>
       <widget class="QPushButton" name="pushButton_schedule">
        <property name="enabled">
@@ -58,8 +143,8 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>50</width>
-         <height>50</height>
+         <width>63</width>
+         <height>63</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -82,11 +167,27 @@ border-image: url(:/1_schedule/1_schedule_down.jpg)
       </widget>
      </item>
      <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>60</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButton_add">
        <property name="minimumSize">
         <size>
-         <width>50</width>
-         <height>50</height>
+         <width>63</width>
+         <height>63</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -103,11 +204,27 @@ border-image: url(:/2_add/2_add_down.jpg)
       </widget>
      </item>
      <item>
+      <spacer name="verticalSpacer_1">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>340</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButton_analytics">
        <property name="minimumSize">
         <size>
-         <width>50</width>
-         <height>50</height>
+         <width>63</width>
+         <height>63</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -128,25 +245,16 @@ border-image: url(:/3_analytics/3_analytics_down.jpg)
    <widget class="QWidget" name="widget_parent" native="true">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>80</x>
       <y>0</y>
-      <width>751</width>
-      <height>581</height>
+      <width>1131</width>
+      <height>631</height>
      </rect>
     </property>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>810</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
  </widget>
+ <layoutdefault spacing="6" margin="9"/>
  <resources>
   <include location="ico/icons.qrc"/>
  </resources>

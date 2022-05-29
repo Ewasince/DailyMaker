@@ -35,7 +35,7 @@ class Ui_MainWindow_cover(Ui_MainWindow):
     def setup_widget(self, custom_widget, name):
         custom_widget.setupUi()
         widget = custom_widget.widget
-        widget.setGeometry(QtCore.QRect(0, 0, 750, 580))
+        widget.setGeometry(QtCore.QRect(0, 0, 1131, 631))
         widget.setObjectName(name)
         widget.hide()
 

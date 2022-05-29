@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="identifier.sqlite" uuid="153f7e68-470b-4fe1-85a5-ef1a01b49a75">
+    <data-source source="LOCAL" name="SQLite - events.db" uuid="72f1cc00-8063-4e0b-9043-9aaa987b9a15">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:identifier.sqlite</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/events.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="events.db" uuid="cece37a2-ccbc-40ae-958c-39e2fdc74748">
+    <data-source source="LOCAL" name="events.db" uuid="877d0456-dad9-4260-9472-7d10bfcacf78">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
