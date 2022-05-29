@@ -1,11 +1,6 @@
 import sqlite3
-import numpy as np
 from plan_manager import *
 from PyQt5.QtCore import QTime, QDate
-
-import copy
-
-import datetime
 
 '''Названия таблиц:
 events
@@ -21,15 +16,18 @@ repeat_model_year
 name_db = 'events.db'
 
 
-class save_manager():
-    def __init__(self):
+class Save_manager:
+    def __init__(self, connection=None):
         try:
-            with open(self.name_db, 'r') as f:
+            with open(name_db, 'r') as f:
                 pass
         except Exception as e:
             print('Файл базы данных не обнаружен, создание...')
+            flag_connection = False
             try:
-                connection = sqlite3.connect(name_db)
+                if connection == None:
+                    connection = sqlite3.connect(name_db)
+                    flag_connection = True
                 cursor = connection.cursor()
 
                 query_table_events = '''CREATE TABLE events(
@@ -40,19 +38,15 @@ class save_manager():
 
                 query_table_time_from = '''CREATE TABLE time_from(
                 id INTEGER PRIMARY KEY,
-                hour INTEGER,
-                minute INTEGER);'''
+                time INTEGER);'''
 
                 query_table_time_to = '''CREATE TABLE time_to(
                 id INTEGER PRIMARY KEY,
-                hour INTEGER,
-                minute INTEGER);'''
+                time INTEGER);'''
 
                 query_table_date = '''CREATE TABLE date(
                 id INTEGER PRIMARY KEY,
-                year INTEGER,
-                month INTEGER,
-                day INTEGER);'''
+                date INTEGER);'''
 
                 query_table_tags = '''CREATE TABLE tags(
                 id INTEGER,
@@ -88,7 +82,7 @@ class save_manager():
             except sqlite3.Error as error:
                 print("Ошибка при создании базы данных", error)
             finally:
-                if (connection):
+                if flag_connection and connection:
                     connection.close()
                     print("Соединение с SQLite закрыто")
         pass
@@ -105,7 +99,7 @@ class save_manager():
 
             rm_id = 0
             event_id = None
-            if event.repeat_model != None:
+            if event.repeat_model is not None:
                 repeat_inst = event.repeat_model
                 query_repeat_model = f'''INSERT INTO repeat_model
                 (type, interval)
@@ -134,64 +128,91 @@ class save_manager():
                                         VALUES ({rm_id},{date_.day()}, {date_.month()})'''
                         cursor.execute(query_day_month)
 
-            query_event = f'''INSERT INTO events
-            (name, description, rm_id)
-            VALUES ('{event.name}', '{event.description}', {rm_id});'''
-            cursor.execute(query_event)
-            event_id = cursor.lastrowid
-
-            time = event.time_from
-            query_time_from = f'''INSERT INTO time_from
-            (id, hour, minute)
-            VALUES ({event_id}, {time.hour()}, {time.minute()})
-            '''
-            cursor.execute(query_time_from)
-
-            time = event.time_to
-            query_time_to = f'''INSERT INTO time_to
-            (id, hour, minute)
-            VALUES ({event_id}, {time.hour()}, {time.minute()})
-            '''
-            cursor.execute(query_time_to)
-
-            date = event.date
-            query_date = f'''INSERT INTO date
-            (id, year, month, day)
-            VALUES ({event_id}, {date.year()}, {date.month()},{date.day()})
-            '''
-            cursor.execute(query_date)
-
-            tag_set = set(event.tags)
-            tag_tuple = list(map(lambda x: (event_id, x), tag_set))
-            query_tags = '''INSERT INTO tags
-            (id, value)
-            VALUES (?,?)'''
-            cursor.executemany(query_tags, tag_tuple)
+            create_event(cursor, event, rm_id)
 
             connection.commit()
         except sqlite3.Error as error:
             print("Ошибка при подключении к sqlite", error)
         finally:
-            if flag_connection and connection:
+            if flag_connection:
                 connection.close()
                 print("Соединение с SQLite закрыто")
 
 
-class load_manager():
+def create_event(cursor, event, rm_id):
+    query_event = f'''INSERT INTO events
+                (name, description, rm_id)
+                VALUES ('{event.name}', '{event.description}', {rm_id});'''
+    cursor.execute(query_event)
+    event_id = cursor.lastrowid
+
+    time = event.time_from
+    hour, minute = make_xx(time.hour(), time.minute())
+    query_time_from = f'''INSERT INTO time_from
+                (id, time)
+                VALUES ({event_id}, time('{hour}:{minute}'))'''
+    cursor.execute(query_time_from)
+
+    time = event.time_to
+    hour, minute = make_xx(time.hour(), time.minute())
+    query_time_to = f'''INSERT INTO time_to
+                (id, time)
+                VALUES ({event_id}, time('{hour}:{minute}'))'''
+    cursor.execute(query_time_to)
+
+    date = event.date
+    year, month, day = make_xx(date.year(), date.month(), date.day())
+    query_date = f'''INSERT INTO date
+                (id, date)
+                VALUES ({event_id}, julianday('{year}-{month}-{day}'))'''
+    cursor.execute(query_date)
+
+    tag_set = set(event.tags)
+    tag_tuple = list(map(lambda x: (event_id, x), tag_set))
+    query_tags = '''INSERT INTO tags
+                (id, value)
+                VALUES (?,?)'''
+    cursor.executemany(query_tags, tag_tuple)
+
+
+def make_xx(*numbers) -> list:
+    output = list()
+    for i in numbers:
+        if i < 10:
+            output.append('0' + str(i))
+        else:
+            output.append((str(i)))
+    return output
+
+
+def convert_to_QTime(cursor, time_str):
+    time = list(map(lambda x: int(x), time_str.split(':')))
+    return QTime(time[0], time[1])
+
+
+def convert_to_QDate(cursor, jdate):
+    query_date = f"SELECT strftime('%Y-%m-%d', '{jdate}')"
+    cursor.execute(query_date)
+    date_list_raw = cursor.fetchall()
+    date_list = (date_list_raw[0][0]).split('-')
+    date = list(map(lambda x: int(x), date_list))
+    return QDate(date[0], date[1], date[2])
+
+
+class Load_manager:
     from PyQt5.QtCore import QDate, QTime
 
     db_flag = True
 
     def __init__(self):
         try:
-            with open(self.name_db, 'r'):
+            with open(name_db, 'r'):
                 pass
         except Exception as e:
             print('Файл базы данных не обнаружен')
             self.db_flag = False
 
-    def find_events(self, date_from: QDate, date_to: QDate,
-                    time_from: QTime, time_to: QTime, connection=None) -> list:
+    def find_events(self, date_from: QDate, date_to: QDate, connection=None) -> list:
         flag_connection = False
         try:
             if connection is None:
@@ -199,39 +220,38 @@ class load_manager():
                 flag_connection = True
             cursor = connection.cursor()
             print("Успешно подключено к SQLite")
-            month_from = date_from.month()
-            month_to = date_to.month()
-            day_from = date_from.day()
-            day_to = date_to.day() # TODO: БЛЯТЬ! даты неправильно выбираются
-            query_find_date = f'''SELECT DISTINCT id FROM date WHERE
-             year BETWEEN {date_from.year()} AND {date_to.year()} AND
-             month BETWEEN {} AND {date_to.month()} AND
-             day BETWEEN {date_from.day()} AND {date_to.day()}
-             '''
+            date = date_from
+            year, month, day = make_xx(date.year(), date.month(), date.day())
+            date_from_str = f'''{year}-{month}-{day}'''
+            date = date_to
+            year, month, day = make_xx(date.year(), date.month(), date.day())
+            date_to_str = f'''{year}-{month}-{day}'''
+
+            query_find_date = f'''SELECT id FROM date WHERE
+             date BETWEEN julianday('{date_from_str}') AND julianday('{date_to_str}')'''
             cursor.execute(query_find_date)
 
             dates_ids_tuples = cursor.fetchall()
-            dates_ids_set = list(map(lambda x: str(x[0]), dates_ids_tuples))
-            string_ids = '(' + ', '.join(dates_ids_set) + ')'
-            query_find_time = f'''SELECT DISTINCT id from time_from WHERE
-            id IN {string_ids} AND
-            hour BETWEEN {time_from.hour()} AND {time_to.hour()} AND
-            minute BETWEEN {time_from.minute()} AND {time_to.minute()};
-            '''
-            cursor.execute(query_find_time)
+            dates_ids_list = list(map(lambda x: str(x[0]), dates_ids_tuples))
+            # string_ids = '(' + ', '.join(dates_ids_set) + ')'
+            # query_find_time = f'''SELECT DISTINCT id from time_from WHERE
+            # id IN {string_ids} AND
+            # hour BETWEEN {time_from.hour()} AND {time_to.hour()} AND
+            # minute BETWEEN {time_from.minute()} AND {time_to.minute()};
+            # '''
+            # cursor.execute(query_find_time)
 
-            time_ids_tuples = cursor.fetchall()
-            time_ids_set = list(map(lambda x: x[0], time_ids_tuples))
+            # time_ids_tuples = cursor.fetchall()
+            # time_ids_set = list(map(lambda x: x[0], time_ids_tuples))
 
-            return time_ids_set
+            return dates_ids_list
         except Exception as e:
             print('Не удалость отобрать events id по причине ', e)
         finally:
             if flag_connection and connection:
                 connection.close()
 
-    def load_events(self, date_from: QDate, date_to: QDate,
-                    time_from: QTime, time_to: QTime, connection=None) -> list:
+    def load_events(self, date_from: QDate, date_to: QDate, connection=None) -> list:
         flag_connection = False
         try:
             if connection is None:
@@ -242,18 +262,29 @@ class load_manager():
             query_repeat_models = f'''SELECT * FROM repeat_model'''
             cursor.execute(query_repeat_models)
             repeat_models_raw = cursor.fetchall()
-            # repeat_models_id = list(map(lambda x: x[0], repeat_models_raw))
-            for i in repeat_models_raw:
-                rm_id = i[0]
+            for i in repeat_models_raw:  # в этом цикле перебираются все rm_model и создаются для них
+                # event'ы, оторые попадают в просматривамый промежуток
+                rm_id = i[0]  # rm расшифровывается как repeat_model
+                rm_type = i[1]
                 query_events_rm = f'''SELECT id FROM events WHERE rm_id = {rm_id}'''
                 cursor.execute(query_events_rm)
-                query_events_rm_int = list(map(lambda x: str(x[0]), cursor.fetchall()))
+                events_rm_raw = cursor.fetchall()
+                if len(events_rm_raw) == 0:  # если у перебираемого repeat_model нету event'ов, то он удаляется
+                    query_rm_delete = f'''DELETE FROM repeat_model WHERE id = {rm_id}'''
+                    cursor.execute(query_rm_delete)
+                    if rm_type == Gaps.week.value or rm_type == Gaps.month.value:
+                        query_rm_delete = f'''DELETE FROM repeat_model_days WHERE id = {rm_id}'''
+                        cursor.execute(query_rm_delete)
+                    else:
+                        query_rm_delete = f'''DELETE FROM repeat_model_year WHERE id = {rm_id}'''
+                        cursor.execute(query_rm_delete)
+                    continue
+                query_events_rm_int = list(map(lambda x: str(x[0]), events_rm_raw))
                 query_events_rm_str = '(' + ', '.join(query_events_rm_int) + ')'
 
                 query_last_entry_date = f'''SELECT * from date WHERE id IN {query_events_rm_str} AND
-                day = (SELECT MAX(day) FROM date WHERE id IN {query_events_rm_str} AND
-                month = (SELECT MAX(month) FROM date WHERE id IN {query_events_rm_str} AND
-                year = (SELECT MAX(year) FROM date WHERE id IN {query_events_rm_str})))'''  # TODO: оптимизировать!
+                date = (SELECT MAX(date) FROM date WHERE id IN {query_events_rm_str})''' 
+
                 cursor.execute(query_last_entry_date)
                 last_entry_date = cursor.fetchall()[0]
 
@@ -276,13 +307,13 @@ class load_manager():
                 e_event = plan_event()
                 e_event.name = last_entry_event[1]
                 e_event.description = last_entry_event[2]
-                e_event.time_from = QTime(last_entry_time_from[1], last_entry_time_from[2])
-                e_event.time_to = QTime(last_entry_time_to[1], last_entry_time_to[2])
-                e_event.date = QDate(last_entry_date[1], last_entry_date[2], last_entry_date[3])
+                e_event.time_from = convert_to_QTime(cursor, last_entry_time_from[1])
+                e_event.time_to = convert_to_QTime(cursor, last_entry_time_to[1])
+
+                e_event.date = convert_to_QDate(cursor, last_entry_date[1])
                 e_event.tags = last_entry_tags
 
                 pass
-                rm_type = i[1]
                 rm_interval = i[2]
                 match rm_type:
                     case Gaps.day.value:
@@ -291,7 +322,8 @@ class load_manager():
                                           e_event.date.day())
                         next_date = next_date.addDays(rm_interval)
                         while date_to > next_date:
-                            self.create_event(cursor, e_event, rm_id, next_date)
+                            e_event.date = next_date
+                            create_event(cursor, e_event, rm_id)
                             next_date = next_date.addDays(rm_interval)
                     case Gaps.week.value:
                         next_date = QDate(e_event.date.year(),
@@ -308,7 +340,8 @@ class load_manager():
                                 next_date_ = next_date_.addDays(1)
                                 try:
                                     days.index(next_date_.dayOfWeek())
-                                    self.create_event(cursor, e_event, rm_id, next_date_)
+                                    e_event.date = next_date_
+                                    create_event(cursor, e_event, rm_id)
                                 except Exception as e:
                                     pass
                             next_date = next_date.addDays(rm_interval * 7)
@@ -317,9 +350,6 @@ class load_manager():
                                           e_event.date.month(),
                                           e_event.date.day())
                         next_date = next_date.addMonths(rm_interval)
-                        # while date_to > next_date:
-                        #     self.create_event(cursor, e_event, rm_id, next_date)
-                        #     next_date.addDays(rm_interval)
                         while date_to > next_date:
                             query_days = f'''SELECT day FROM repeat_model_days WHERE id = {rm_id}'''
                             cursor.execute(query_days)
@@ -330,7 +360,8 @@ class load_manager():
                                 next_date_ = next_date_.addDays(1)
                                 try:
                                     days.index(next_date_.daysInMonth())
-                                    self.create_event(cursor, e_event, rm_id, next_date_)
+                                    e_event.date = next_date_
+                                    create_event(cursor, e_event, rm_id)
                                 except Exception as e:
                                     pass
                             next_date = next_date.addMonths(rm_interval)
@@ -345,11 +376,12 @@ class load_manager():
                             year_days = cursor.fetchall()[0]
                             next_date_ = QDate(next_date.year(), year_days[1], year_days[0])
 
-                            self.create_event(cursor, e_event, rm_id, next_date_)
+                            e_event.date = next_date_
+                            create_event(cursor, e_event, rm_id)
                             next_date = next_date.addYears(rm_interval)
                 connection.commit()
 
-            events_id_int = self.find_events(date_from, date_to, time_from, time_to, connection)
+            events_id_int = self.find_events(date_from, date_to, connection)
             events_id_str = '(' + ', '.join(map(lambda x: str(x), events_id_int)) + ')'
 
             query_events = f'''SELECT * FROM events WHERE id IN {events_id_str} ORDER BY id'''
@@ -374,9 +406,9 @@ class load_manager():
                 event.id = i[0]
                 event.name = i[1]
                 event.description = i[2]
-                event.time_from = QTime(time_from_raw[n][1], time_from_raw[n][2], time_from_raw[n][3])
-                event.time_to = QTime(time_to_raw[n][1], time_to_raw[n][2], time_to_raw[n][3])
-                event.date = QDate(date_raw[n][1], date_raw[n][2])
+                event.time_from = convert_to_QTime(cursor, time_from_raw[n][1])
+                event.time_to = convert_to_QTime(cursor, time_to_raw[n][1])
+                event.date = convert_to_QDate(cursor, date_raw[n][1])
 
                 events.append(event)
             return events
@@ -386,33 +418,3 @@ class load_manager():
         finally:
             if flag_connection and connection:
                 connection.close()
-
-    @staticmethod
-    def create_event(cursor, e_event, rm_id, date):
-        """из event берутся параметры name, description, time_from, time_to, tags"""
-
-        query_next_event = f'''INSERT INTO events
-        (name, description, rm_id)
-        VALUES ('{e_event.name}', '{e_event.description}', {rm_id})'''
-        cursor.execute(query_next_event)
-        event_id = cursor.lastrowid
-
-        query_next_time_from = f'''INSERT INTO time_from
-        (id, hour, minute) 
-        VALUES ({event_id}, {e_event.time_from.hour()}, {e_event.time_from.minute()})'''
-        cursor.execute(query_next_time_from)
-
-        query_next_time_to = f'''INSERT INTO time_to
-        (id, hour, minute)
-        VALUES ({event_id}, {e_event.time_to.hour()}, {e_event.time_to.minute()})'''
-        cursor.execute(query_next_time_to)
-
-        last_entry_tags_ = list(map(lambda x: (event_id, x), e_event.tags))
-        query_next_tags = f'''INSERT INTO tags
-        (id, value) VALUES (?,?)'''
-        cursor.executemany(query_next_tags, last_entry_tags_)
-
-        query_next_date = f'''INSERT INTO date
-        (id, year, month, day) 
-        VALUES ({event_id}, {date.year()}, {date.month()}, {date.day()})'''
-        cursor.execute(query_next_date)
