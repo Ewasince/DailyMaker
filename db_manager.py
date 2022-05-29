@@ -125,7 +125,7 @@ class Save_manager:
                         date_ = time_interval.date
                         query_day_month = f'''INSERT INTO repeat_model_year
                                         (id, day, month)
-                                        VALUES ({rm_id},{date_.day()}, {date_.month()})'''
+                                        VALUES ({rm_id}, {date_.day()}, {date_.month()})'''
                         cursor.execute(query_day_month)
 
             create_event(cursor, event, rm_id)
@@ -283,7 +283,7 @@ class Load_manager:
                 query_events_rm_str = '(' + ', '.join(query_events_rm_int) + ')'
 
                 query_last_entry_date = f'''SELECT * from date WHERE id IN {query_events_rm_str} AND
-                date = (SELECT MAX(date) FROM date WHERE id IN {query_events_rm_str})''' 
+                date = (SELECT MAX(date) FROM date WHERE id IN {query_events_rm_str})'''
 
                 cursor.execute(query_last_entry_date)
                 last_entry_date = cursor.fetchall()[0]
