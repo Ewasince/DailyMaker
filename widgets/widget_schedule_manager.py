@@ -19,9 +19,9 @@ class Ui_Schedule(Ui_Form):
 
         save_manager_ = Save_manager()
 
-        # manager = Load_manager()
-        # date_from = QDate(2022, 5, 28)
-        # date_to = QDate(2022, 6, 15)
-        # test = manager.load_events(date_from, date_to)
-        # pass
+        manager = Load_manager()
+        date_from = QDate(2022, 5, 28)
+        date_to = QDate(2022, 8, 15)
+        test = manager.load_events(date_from, date_to)
+        pass
 

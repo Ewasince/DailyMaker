@@ -148,8 +148,6 @@ class Ui_Add(Ui_Form):
         repeat_instance_.type = type
         repeat_instance_.gap = self.spinBox_count_repeats.value()
         match type:
-            # case Gaps.day:
-            #     pass
             case Gaps.week.value:
                 days_of_week = []
                 # value: QtWidgets.QCheckBox = None # TODO: разобраться можно ли указывать тип в цикле
@@ -159,14 +157,15 @@ class Ui_Add(Ui_Form):
                 week_model = plan_manager.rm_week(days_of_week)
                 repeat_instance_.time_interval = week_model
             case Gaps.month.value:
+                # n = 0
+                month_days = [n for n, i in enumerate(self.checked_days_of_month) if i is True]
                 month_model = plan_manager.rm_month(self.checkBox_endure.isChecked(),
-                                                    self.checked_days_of_month)
+                                                    month_days)
                 repeat_instance_.time_interval = month_model
             case Gaps.year.value:
                 year_model = plan_manager.rm_year(self.dateEdit_year.date())
                 repeat_instance_.time_interval = year_model
         instance.repeat_model = repeat_instance_
-
 
     def warning_message(self, text, title='Подтвердите действие'):
         error = QtWidgets.QMessageBox()
@@ -179,7 +178,7 @@ class Ui_Add(Ui_Form):
 
         error.exec_()  # TODO: доделать логику всплывающего сообщения
 
-    def warning_message_event(self, btn): # TODO: эта пар*ша не работает
+    def warning_message_event(self, btn):  # TODO: эта пар*ша не работает
         if btn.text() == 'Yes':
             self.flag_plan_instance = True
         elif btn.text() == 'No':

@@ -199,6 +199,11 @@ def convert_to_QDate(cursor, jdate):
     return QDate(date[0], date[1], date[2])
 
 
+def sql_reguest(cursor: sqlite3.Cursor, request: str) -> object:
+    cursor.execute(request)
+    return cursor.fetchall()
+
+
 class Load_manager:
     from PyQt5.QtCore import QDate, QTime
 
@@ -233,16 +238,6 @@ class Load_manager:
 
             dates_ids_tuples = cursor.fetchall()
             dates_ids_list = list(map(lambda x: str(x[0]), dates_ids_tuples))
-            # string_ids = '(' + ', '.join(dates_ids_set) + ')'
-            # query_find_time = f'''SELECT DISTINCT id from time_from WHERE
-            # id IN {string_ids} AND
-            # hour BETWEEN {time_from.hour()} AND {time_to.hour()} AND
-            # minute BETWEEN {time_from.minute()} AND {time_to.minute()};
-            # '''
-            # cursor.execute(query_find_time)
-
-            # time_ids_tuples = cursor.fetchall()
-            # time_ids_set = list(map(lambda x: x[0], time_ids_tuples))
 
             return dates_ids_list
         except Exception as e:
@@ -359,7 +354,16 @@ class Load_manager:
                             for j in range(31):
                                 next_date_ = next_date_.addDays(1)
                                 try:
-                                    days.index(next_date_.daysInMonth())
+                                    days.index(next_date_.day() - 1)
+
+                                    exiting_event_id = sql_reguest(cursor,
+                                                                f'''SELECT id FROM date WHERE date = 
+                                                                julianday('{next_date_.year()}-{next_date_.month()}-{next_date_.day()}')''')
+                                    exititing_rm_id = sql_reguest(cursor,
+                                                                     f'''SELECT rm_id FROM event WHERE id = {exiting_event_id})
+                                    if exiting_rm_id == rm_id:
+                                        continue
+
                                     e_event.date = next_date_
                                     create_event(cursor, e_event, rm_id)
                                 except Exception as e:
