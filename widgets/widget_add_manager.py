@@ -19,7 +19,7 @@ class Ui_Add(Ui_Form):
     def __init__(self, owner):
         self.owner = owner  # установка родительского жлемента
         self.initialize_slider()
-
+    # дополнительная инициализация интерфейса
     def setupUi(self):
         self.widget = QtWidgets.QWidget(self.owner)
         super().setupUi(self.widget)
@@ -46,6 +46,7 @@ class Ui_Add(Ui_Form):
 
         self.set_default()
 
+    # очистка заполняемых полей
     def clear_fields(self):
         self.lineEdit_name.setText('')
         self.lineEdit_tags.setText('')
@@ -60,11 +61,13 @@ class Ui_Add(Ui_Form):
             item.setChecked(False)
         self.set_default()
 
-    def initialize_slider(self):  # инициализация массива, нужного для работы слайдера
+    # инициализация функционаа слайдера. инициализация массива дней для rm_month
+    def initialize_slider(self):
         self.checked_days_of_month = []
         for i in range(31):
             self.checked_days_of_month.append(False)
 
+    # установка в поля для заполнения значений по умолчанию
     def set_default(self):
         self.today_event()
         now = datetime.datetime.now()
@@ -72,6 +75,7 @@ class Ui_Add(Ui_Form):
         self.timeEdit_end.setTime(datetime.time((now.hour + 2) % 24))
         self.dateEdit_year.setDate(datetime.date.today())
 
+    # событие при выборе периода повтора события (день/неделя/месяц/год)
     def comboBox_event(self):
         value = self.comboBox_gap.currentText()
         match value:
@@ -84,6 +88,7 @@ class Ui_Add(Ui_Form):
             case Gaps.year.value:
                 self.show_gap_widget(self.widget_year)
 
+    # метод для отображения нужного виджета для repeat_model (см. comboBox_event)
     def show_gap_widget(self, widget):
         for item in self.widgets:
             if item == widget:
@@ -91,12 +96,14 @@ class Ui_Add(Ui_Form):
             else:
                 item.hide()
 
+    # событие при изменении значения слайдера в rm_month widget
     def slider_event(self):
         num = self.horizontalSlider.sliderPosition()
         self.label_slider.setText(str(num))
         vals = self.checked_days_of_month
         self.checkBox_gap_month.setChecked(vals[num - 1])
 
+    # событие при отметке chexkBox в rm_mont widget
     def checked_gap_month_event(self):
         status = self.checkBox_gap_month.isChecked()
         slider_position = self.horizontalSlider.sliderPosition()
@@ -104,6 +111,7 @@ class Ui_Add(Ui_Form):
 
     flag_plan_instance: bool = True
 
+    # фунция сохранения ивента
     def save_event(self):
         self.flag_plan_instance = True
         plan_instance = plan_event()
@@ -112,16 +120,14 @@ class Ui_Add(Ui_Form):
             self.set_plan_repeat_model(plan_instance)
         if self.flag_plan_instance:
             self.save_plan_instance(plan_instance)
-            self.process_plan_instance(plan_instance)
 
+    # функция сохранения готового ивента
     def save_plan_instance(self, instance):
         save_manager = db_manager.Save_manager()
         save_manager.save_event(instance)
         pass
 
-    def process_plan_instance(self, instance):
-        pass
-
+    # функция заполнения объекта ивента
     def fill_plan_instance(self, instance: plan_event):
         instance.name = self.lineEdit_name.text()
 
@@ -141,6 +147,7 @@ class Ui_Add(Ui_Form):
         instance.tags = list(map(lambda x: x.strip(), self.lineEdit_tags.text().split(',')))
         instance.description = self.textEdit_main.toPlainText()
 
+    # функция добавления repeat_model в объект ивента
     def set_plan_repeat_model(self, instance: plan_event):
         repeat_instance_ = repeat_instance()
 
@@ -167,31 +174,37 @@ class Ui_Add(Ui_Form):
                 repeat_instance_.time_interval = year_model
         instance.repeat_model = repeat_instance_
 
+    # функция вызова предупреждающего сообщения
     def warning_message(self, text, title='Подтвердите действие'):
-        error = QtWidgets.QMessageBox()
-        error.setText(text)
-        error.setWindowTitle(title)
-        error.setIcon(QMessageBox.Warning)
-        error.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        error.setDefaultButton(QMessageBox.No)
-        error.buttonClicked.connect(self.warning_message_event)
+        pass
+        # error = QtWidgets.QMessageBox()
+        # error.setText(text)
+        # error.setWindowTitle(title)
+        # error.setIcon(QMessageBox.Warning)
+        # error.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        # error.setDefaultButton(QMessageBox.No)
+        # error.buttonClicked.connect(self.warning_message_event)
+        #
+        # error.exec_()  # TODO: доделать логику всплывающего сообщения
 
-        error.exec_()  # TODO: доделать логику всплывающего сообщения
-
+    # событие при клике на кнопку в предупреждающем сообщении
     def warning_message_event(self, btn):  # TODO: эта пар*ша не работает
         if btn.text() == 'Yes':
             self.flag_plan_instance = True
         elif btn.text() == 'No':
             self.flag_plan_instance = False
 
+    # событие удаления ивента
     def delete_event(self):
         self.clear_fields()
 
+    # функция установки даты на сегодняшнее число
     def today_event(self):
         date = datetime.date.today()
         # date_str = date.strftime('%d.%m.%Y')
         self.dateEdit_date.setDate(date)
 
+    # функция установки даты на завтрашнее число
     def tomorrow_event(self):
         today = datetime.date.today()
         date = datetime.date(today.year, today.month, today.day + 1)
