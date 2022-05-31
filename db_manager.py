@@ -199,9 +199,11 @@ def convert_to_QDate(cursor, jdate):
     return QDate(date[0], date[1], date[2])
 
 
-def sql_reguest(cursor: sqlite3.Cursor, request: str) -> object:
+def sql_reguest(cursor: sqlite3.Cursor, request: str):
+    test = request
     cursor.execute(request)
-    return cursor.fetchall()
+    result = cursor.fetchall()
+    return result
 
 
 class Load_manager:
@@ -344,7 +346,7 @@ class Load_manager:
                         next_date = QDate(e_event.date.year(),
                                           e_event.date.month(),
                                           e_event.date.day())
-                        next_date = next_date.addMonths(rm_interval)
+                        # next_date = next_date.addMonths(rm_interval)
                         while date_to > next_date:
                             query_days = f'''SELECT day FROM repeat_model_days WHERE id = {rm_id}'''
                             cursor.execute(query_days)
@@ -355,18 +357,23 @@ class Load_manager:
                                 next_date_ = next_date_.addDays(1)
                                 try:
                                     days.index(next_date_.day() - 1)
-
-                                    exiting_event_id = sql_reguest(cursor,
-                                                                f'''SELECT id FROM date WHERE date = 
-                                                                julianday('{next_date_.year()}-{next_date_.month()}-{next_date_.day()}')''')
-                                    exititing_rm_id = sql_reguest(cursor,
-                                                                     f'''SELECT rm_id FROM event WHERE id = {exiting_event_id})
-                                    if exiting_rm_id == rm_id:
-                                        continue
-
+                                    year, month, day = make_xx(next_date_.year(), next_date_.month(),
+                                                               next_date_.day())
+                                    month = '07'
+                                    query = f'''SELECT id FROM date WHERE date = 
+                                                                julianday('{year}-{month}-{day}')'''
+                                    exiting_event_id = sql_reguest(cursor, query)
+                                    if len(exiting_event_id) != 0:
+                                        exiting_rm_id = sql_reguest(cursor,
+                                                                    f'''SELECT rm_id FROM events WHERE id = {exiting_event_id[0][0]}''')
+                                        if len(exiting_rm_id) != 0:
+                                            if exiting_rm_id[0][0] == rm_id:
+                                                continue
                                     e_event.date = next_date_
                                     create_event(cursor, e_event, rm_id)
+                                    connection.commit()
                                 except Exception as e:
+                                    test = e
                                     pass
                             next_date = next_date.addMonths(rm_interval)
                     case Gaps.year.value:

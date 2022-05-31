@@ -21,7 +21,7 @@ class Ui_Schedule(Ui_Form):
 
         manager = Load_manager()
         date_from = QDate(2022, 5, 28)
-        date_to = QDate(2022, 8, 15)
+        date_to = QDate(2022, 11, 15)
         test = manager.load_events(date_from, date_to)
         pass
 
