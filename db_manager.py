@@ -205,6 +205,17 @@ def sql_reguest(cursor: sqlite3.Cursor, request: str):
     result = cursor.fetchall()
     return result
 
+def exist_event(cursor, date, rm_id):
+    year, month, day = make_xx(date.year(), date.month(), date.day())
+    query = f'''SELECT id FROM date WHERE date = julianday('{year}-{month}-{day}')'''
+    exiting_event_id = sql_reguest(cursor, query)
+    if len(exiting_event_id) != 0:
+        exiting_rm_id = sql_reguest(cursor, f'''SELECT rm_id FROM events WHERE id = {exiting_event_id[0][0]}''')
+        if len(exiting_rm_id) != 0:
+            if exiting_rm_id[0][0] == rm_id:
+                return  True
+    return False
+
 
 class Load_manager:
     from PyQt5.QtCore import QDate, QTime
@@ -326,7 +337,7 @@ class Load_manager:
                         next_date = QDate(e_event.date.year(),
                                           e_event.date.month(),
                                           e_event.date.day())
-                        next_date = next_date.addDays(rm_interval * 7)
+                        # next_date = next_date.addDays(rm_interval * 7)
                         while date_to > next_date:
                             query_days = f'''SELECT day FROM repeat_model_days WHERE id = {rm_id}'''
                             cursor.execute(query_days)
@@ -337,8 +348,13 @@ class Load_manager:
                                 next_date_ = next_date_.addDays(1)
                                 try:
                                     days.index(next_date_.dayOfWeek())
+
+                                    if exist_event(cursor, next_date, rm_id):
+                                        continue
+
                                     e_event.date = next_date_
                                     create_event(cursor, e_event, rm_id)
+                                    connection.commit()
                                 except Exception as e:
                                     pass
                             next_date = next_date.addDays(rm_interval * 7)
@@ -357,18 +373,9 @@ class Load_manager:
                                 next_date_ = next_date_.addDays(1)
                                 try:
                                     days.index(next_date_.day() - 1)
-                                    year, month, day = make_xx(next_date_.year(), next_date_.month(),
-                                                               next_date_.day())
-                                    month = '07'
-                                    query = f'''SELECT id FROM date WHERE date = 
-                                                                julianday('{year}-{month}-{day}')'''
-                                    exiting_event_id = sql_reguest(cursor, query)
-                                    if len(exiting_event_id) != 0:
-                                        exiting_rm_id = sql_reguest(cursor,
-                                                                    f'''SELECT rm_id FROM events WHERE id = {exiting_event_id[0][0]}''')
-                                        if len(exiting_rm_id) != 0:
-                                            if exiting_rm_id[0][0] == rm_id:
-                                                continue
+                                    if exist_event(cursor, next_date_, rm_id):
+                                        continue
+
                                     e_event.date = next_date_
                                     create_event(cursor, e_event, rm_id)
                                     connection.commit()
