@@ -400,6 +400,10 @@ class Load_manager:
             cursor.execute(query_date)
             date_raw = cursor.fetchall()
 
+            query_tags = f'''SELECT * FROM tags WHERE id IN {events_id_str} ORDER BY id'''
+            cursor.execute(query_tags)
+            tags = cursor.fetchall()
+
             events = list()
             for n, i in enumerate(events_raw):
                 event = plan_event()
@@ -415,6 +419,7 @@ class Load_manager:
                 #print("time_to", time_to_raw[n][1])
                 event.date = convert_to_QDate(cursor, date_raw[n][1])
                 #print("date", date_raw[n][1])
+                event.tags = i[1]
 
                 events.append(event)
             #for element in events:
