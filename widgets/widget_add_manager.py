@@ -179,7 +179,7 @@ class Ui_Add(Ui_Form):
 
         error.exec_()  # TODO: доделать логику всплывающего сообщения
 
-    def warning_message_event(self, btn): # TODO: эта пар*ша не работает
+    def warning_message_event(self, btn): # TODO: это не работает
         if btn.text() == 'Yes':
             self.flag_plan_instance = True
         elif btn.text() == 'No':

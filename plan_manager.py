@@ -12,10 +12,8 @@ class plan_event:
     description: str = None
     repeat_model = None  # type: repeat_instance
 
-
     def __init__(self):
         pass
-
 
 class repeat_instance:
     type = None  # type: Gaps
@@ -78,6 +76,3 @@ class Gaps(enum.Enum):
         for item in Gaps:
             items.append(item.value)
         return items
-
-
-

@@ -404,14 +404,23 @@ class Load_manager:
             for n, i in enumerate(events_raw):
                 event = plan_event()
                 event.id = i[0]
+                #print("id", i[0])
                 event.name = i[1]
+                #print("name", i[1])
                 event.description = i[2]
+                #print("description", i[2])
                 event.time_from = convert_to_QTime(cursor, time_from_raw[n][1])
+                #print("time_from", time_from_raw[n][1])
                 event.time_to = convert_to_QTime(cursor, time_to_raw[n][1])
+                #print("time_to", time_to_raw[n][1])
                 event.date = convert_to_QDate(cursor, date_raw[n][1])
+                #print("date", date_raw[n][1])
 
                 events.append(event)
+            #for element in events:
+            #    print(element)
             return events
+
         except Exception as e:
             print('Загрузка не удалась по причине ', e)
             return []
