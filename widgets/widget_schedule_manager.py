@@ -15,6 +15,7 @@ from plan_manager import plan_event
 
 class Ui_Schedule(Ui_Form):
     widget = None
+    calendar_widget = None
     owner = None
     manager = Load_manager()
     events: [plan_event] = list()
@@ -27,13 +28,13 @@ class Ui_Schedule(Ui_Form):
         self.widget = QtWidgets.QWidget(self.owner)
         # self.widget = my_calendar(self.owner):
         super().setupUi(self.widget)
-        self.widget = self.calendarWidget
+        self.calendar_widget = self.calendarWidget
 
         # TODO возможно нужно изменить минимальную дату
-        self.widget.setMinimumDate(QDate(2022, 1, 1))
-        self.widget.setMaximumDate(QDate(2022, 12, 31))
+        self.calendar_widget.setMinimumDate(QDate(2022, 1, 1))
+        self.calendar_widget.setMaximumDate(QDate(2022, 12, 31))
 
-        self.events = self.manager.load_events(self.widget.minimumDate(), self.widget.maximumDate())
+        self.events = self.manager.load_events(self.calendar_widget.minimumDate(), self.calendar_widget.maximumDate())
         # self.events[0].
 
         # save_manager_ = Save_manager()
@@ -44,13 +45,13 @@ class Ui_Schedule(Ui_Form):
 
         self.initialize_activity_buttons()
 
-        self.widget.clicked.connect(lambda: print('Clicked'))
+        self.calendar_widget.clicked.connect(self.event_calendar_clicked)
 
 
         pass
 
-    def event_calendar_clicked(self):
-        test = 0
+    def event_calendar_clicked(self, day):
+        self.display_events_on_certain_day(day)
         pass
 
 
@@ -72,7 +73,7 @@ class Ui_Schedule(Ui_Form):
     # Инициализация comboBox с фильтрами
     def fill_combo_box(self):
         self.comboBoxAddFilters.addItems(
-            self.manager.get_unique_tags(self.widget.minimumDate(), self.widget.maximumDate()))
+            self.manager.get_unique_tags(self.calendar_widget.minimumDate(), self.calendar_widget.maximumDate()))
         pass
 
     # Фильтр событий
@@ -88,13 +89,13 @@ class Ui_Schedule(Ui_Form):
 
         unique_dates = list(set(dates))
 
-        self.widget.specific_dates = unique_dates
+        self.calendar_widget.specific_dates = unique_dates
         pass
 
     # Очистка фильтров
     def remove_events(self):
 
-        self.widget.specific_dates = None
+        self.calendar_widget.specific_dates = None
         pass
 
     # Отображение в правой части экрана всех активностей за выбранный день
@@ -102,8 +103,8 @@ class Ui_Schedule(Ui_Form):
         certain_events = list()
         event: plan_event
         for event in self.events:
-            if compare_dates((event.date, date)):
-                certain_events.append(event.date)
+            if compare_dates(event.date, date):
+                certain_events.append(event)
         self.display_events(certain_events)
 
         pass
