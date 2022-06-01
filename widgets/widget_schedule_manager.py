@@ -44,6 +44,9 @@ class Ui_Schedule(Ui_Form):
         self.comboBoxAddFilters.activated.connect(self.filter_events_by_tag)
 
         self.initialize_activity_buttons()
+        for item in self.activity_buttons:
+            item.hide()
+        self.labelActivity_3.hide()
 
         self.calendar_widget.clicked.connect(self.event_calendar_clicked)
 
@@ -100,12 +103,18 @@ class Ui_Schedule(Ui_Form):
 
     # Отображение в правой части экрана всех активностей за выбранный день
     def display_events_on_certain_day(self, date: QDate):
+        self.labelActivity_2.hide()
         certain_events = list()
         event: plan_event
         for event in self.events:
             if compare_dates(event.date, date):
                 certain_events.append(event)
+
         self.display_events(certain_events)
+        if len(certain_events) != 0:
+            self.labelActivity_3.hide()
+        else:
+            self.labelActivity_3.show()
 
         pass
 
@@ -119,7 +128,7 @@ class Ui_Schedule(Ui_Form):
         event: plan_event
         for event in target_events:
             but = self.activity_buttons[n]
-            but.setText(event.name + '\n' + f"{event.time_from.toString()}={event.time_to.toString()}")
+            but.setText(event.name + '\n' + f"{event.time_from.toString()[0:-3]}-{event.time_to.toString()[0:-3]}")
             but.show()
             n += 1
 
