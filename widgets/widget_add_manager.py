@@ -176,8 +176,12 @@ class Ui_Add(Ui_Form):
                 week_model = plan_manager.rm_week(days_of_week)
                 repeat_instance_.time_interval = week_model
             case Gaps.month.value:
+                days_month = list()
+                for n, i in enumerate(self.checked_days_of_month):
+                    if i:
+                        days_month.append(n)
                 month_model = plan_manager.rm_month(self.checkBox_endure.isChecked(),
-                                                    self.checked_days_of_month)
+                                                    days_month)
                 repeat_instance_.time_interval = month_model
             case Gaps.year.value:
                 year_model = plan_manager.rm_year(self.dateEdit_year.date())
