@@ -25,7 +25,7 @@ class Ui_Schedule(Ui_Form):
 
         self.events = self.manager.load_events(self.min_date, self.max_date)
 
-        self.fill_comboBox_init()
+        # self.comboBoxAddFilters.setDuplicatesEnabled(False)
         self.comboBoxAddFilters.setCurrentIndex(-1)
         self.comboBoxAddFilters.setEditable(False)
         self.comboBoxAddFilters.activated.connect(self.filter_events_by_tag)
@@ -55,6 +55,8 @@ class Ui_Schedule(Ui_Form):
         start_date = QDate(current_date.year(), current_date.month(), 1)
         end_date = QDate(current_date.year(), current_date.month(), start_date.daysInMonth())
         self.events = self.manager.load_events(start_date, end_date)
+        self.comboBoxAddFilters.clear()
+        self.fill_comboBox_init()
         self.widget.show()
 
     def hide(self):
