@@ -77,11 +77,11 @@ class Ui_MainWindow(object):
         self.pushButton_schedule.setEnabled(True)
         self.pushButton_schedule.setMinimumSize(QtCore.QSize(63, 63))
         self.pushButton_schedule.setStyleSheet("#pushButton_schedule{\n"
-"border-image: url(:/1_schedule/1_schedule_up.jpg)\n"
-"}\n"
-"#pushButton_schedule:pressed{\n"
-"border-image: url(:/1_schedule/1_schedule_down.jpg)\n"
-"}")
+                                               "border-image: url(:/1_schedule/1_schedule_up.jpg)\n"
+                                               "}\n"
+                                               "#pushButton_schedule:pressed{\n"
+                                               "border-image: url(:/1_schedule/1_schedule_down.jpg)\n"
+                                               "}")
         self.pushButton_schedule.setText("")
         self.pushButton_schedule.setIconSize(QtCore.QSize(50, 50))
         self.pushButton_schedule.setObjectName("pushButton_schedule")
@@ -91,11 +91,11 @@ class Ui_MainWindow(object):
         self.pushButton_add = QtWidgets.QPushButton(self.leftLayout)
         self.pushButton_add.setMinimumSize(QtCore.QSize(63, 63))
         self.pushButton_add.setStyleSheet("#pushButton_add{\n"
-"border-image: url(:/2_add/2_add_up.jpg)\n"
-"}\n"
-"#pushButton_add:pressed{\n"
-"border-image: url(:/2_add/2_add_down.jpg)\n"
-"}")
+                                          "border-image: url(:/2_add/2_add_up.jpg)\n"
+                                          "}\n"
+                                          "#pushButton_add:pressed{\n"
+                                          "border-image: url(:/2_add/2_add_down.jpg)\n"
+                                          "}")
         self.pushButton_add.setText("")
         self.pushButton_add.setObjectName("pushButton_add")
         self.verticalLayout_2.addWidget(self.pushButton_add)
@@ -104,11 +104,11 @@ class Ui_MainWindow(object):
         self.pushButton_analytics = QtWidgets.QPushButton(self.leftLayout)
         self.pushButton_analytics.setMinimumSize(QtCore.QSize(63, 63))
         self.pushButton_analytics.setStyleSheet("#pushButton_analytics{\n"
-"border-image: url(:/3_analytics/3_analytics_up.jpg)\n"
-"}\n"
-"#pushButton_analytics:pressed{\n"
-"border-image: url(:/3_analytics/3_analytics_down.jpg)\n"
-"}")
+                                                "border-image: url(:/3_analytics/3_analytics_up.jpg)\n"
+                                                "}\n"
+                                                "#pushButton_analytics:pressed{\n"
+                                                "border-image: url(:/3_analytics/3_analytics_down.jpg)\n"
+                                                "}")
         self.pushButton_analytics.setText("")
         self.pushButton_analytics.setObjectName("pushButton_analytics")
         self.verticalLayout_2.addWidget(self.pushButton_analytics)
@@ -123,11 +123,13 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-import icons_rc
 
+
+import icons_rc
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()

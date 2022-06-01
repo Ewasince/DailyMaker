@@ -15,6 +15,7 @@ repeat_model_year
 
 name_db = 'events.db'
 
+
 # класс, необходимый для сохранения ивентов. перед сохранением необходимо создать его экземпляр
 class Save_manager:
     def __init__(self, connection=None):
@@ -139,6 +140,7 @@ class Save_manager:
                 connection.close()
                 print("Соединение с SQLite закрыто")
 
+
 # функция сохраняет ивент без учета repeat_model
 def create_event(cursor, event, rm_id):
     query_event = f'''INSERT INTO events
@@ -175,6 +177,7 @@ def create_event(cursor, event, rm_id):
                 VALUES (?,?)'''
     cursor.executemany(query_tags, tag_tuple)
 
+
 # фунция приводит число в формат ХХ типа str
 def make_xx(*numbers) -> list:
     output = list()
@@ -185,10 +188,12 @@ def make_xx(*numbers) -> list:
             output.append((str(i)))
     return output
 
+
 # получается на вход строку формата hh:mm и конвертирует в объект QTime
 def convert_to_QTime(cursor, time_str):
     time = list(map(lambda x: int(x), time_str.split(':')))
     return QTime(time[0], time[1])
+
 
 # получается на вход строку формата YYYY-mm-dd и конвертирует в объект QDate
 def convert_to_QDate(cursor, jdate):
@@ -207,6 +212,7 @@ def sql_reguest(cursor: sqlite3.Cursor, request: str):
     result = cursor.fetchall()
     return result
 
+
 # поверяет существание ивента с заданными параметрами
 def exist_event(cursor, date, rm_id):
     year, month, day = make_xx(date.year(), date.month(), date.day())
@@ -216,8 +222,9 @@ def exist_event(cursor, date, rm_id):
         exiting_rm_id = sql_reguest(cursor, f'''SELECT rm_id FROM events WHERE id = {exiting_event_id[0][0]}''')
         if len(exiting_rm_id) != 0:
             if exiting_rm_id[0][0] == rm_id:
-                return  True
+                return True
     return False
+
 
 # класс, необходимый для загрузки ивентов. перед загрузкой необходимо проинициализировать
 class Load_manager:
@@ -266,6 +273,9 @@ class Load_manager:
     # получает на вход промежуток времени в формате QDate и выдает с входящими в него объектами событий список
     #
     def load_events(self, date_from: QDate, date_to: QDate, connection=None) -> list:
+        if not self.db_flag:
+            return []
+
         flag_connection = False
         try:
             if connection is None:
@@ -336,6 +346,9 @@ class Load_manager:
                                           e_event.date.day())
                         next_date = next_date.addDays(rm_interval)
                         while date_to > next_date:
+                            if exist_event(cursor, next_date, rm_id):
+                                continue
+
                             e_event.date = next_date
                             create_event(cursor, e_event, rm_id)
                             next_date = next_date.addDays(rm_interval)
@@ -344,18 +357,18 @@ class Load_manager:
                                           e_event.date.month(),
                                           e_event.date.day())
                         # next_date = next_date.addDays(rm_interval * 7)
-                        while date_to > next_date:
+                        while date_to.toJulianDay() + 7 >= next_date.toJulianDay():
                             query_days = f'''SELECT day FROM repeat_model_days WHERE id = {rm_id}'''
                             cursor.execute(query_days)
                             days = list(map(lambda x: x[0], cursor.fetchall()))
 
-                            next_date_ = QDate(next_date.year(), next_date.month(), next_date.day())
+                            # next_date = next_date.addDays((-1) * (next_date.dayOfWeek() -1))
                             for j in range(7):
-                                next_date_ = next_date_.addDays(1)
+                                next_date_ = next_date.addDays(j)
                                 try:
-                                    days.index(next_date_.dayOfWeek()-1)
+                                    days.index(next_date_.dayOfWeek() - 1)
 
-                                    if exist_event(cursor, next_date, rm_id):
+                                    if exist_event(cursor, next_date_, rm_id):
                                         continue
 
                                     e_event.date = next_date_
@@ -369,7 +382,7 @@ class Load_manager:
                                           e_event.date.month(),
                                           e_event.date.day())
                         # next_date = next_date.addMonths(rm_interval)
-                        while date_to > next_date:
+                        while date_to.toJulianDay() + 31 >= next_date.toJulianDay():
                             query_days = f'''SELECT day FROM repeat_model_days WHERE id = {rm_id}'''
                             cursor.execute(query_days)
                             days = list(map(lambda x: x[0], cursor.fetchall()))
@@ -468,6 +481,8 @@ class Load_manager:
     def get_unique_tags(self, minimumDate: QDate, maximumDate: QDate):
         events = self.load_events(minimumDate, maximumDate)
         all_tags = list()
+        if len(events) == 0:
+            return []
 
         for event in events:
             for tag in event.tags:
