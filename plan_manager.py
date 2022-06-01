@@ -1,16 +1,22 @@
 import datetime
 import enum
 
+from PyQt5.QtCore import QDate, QTime
+
+
 # класс ивента
 class plan_event:
     id: int = 0
     name: str = None
-    time_from: datetime.time = None
-    time_to: datetime.time = None
-    date: datetime.date = None
-    tags: str = []
+    time_from: QTime = None
+    time_to: QTime = None
+    date: QDate = None
+    tags: list[str] = None
     description: str = None
     repeat_model = None  # type: repeat_instance
+
+    def __init__(self):
+        pass
 
 # класс repeat_model содержит информацию о том, по какой модели повторяется событие
 class repeat_instance:
@@ -72,6 +78,3 @@ class Gaps(enum.Enum):
         for item in Gaps:
             items.append(item.value)
         return items
-
-
-

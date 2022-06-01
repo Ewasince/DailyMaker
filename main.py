@@ -30,6 +30,8 @@ class Ui_MainWindow_cover(Ui_MainWindow):
         self.widgets_array.append(self.widget_analytics)
         self.setup_widget(self.widget_analytics, "widget_analytics")
 
+        self.pushButton_analytics.hide()
+
         self.add_functions()
 
     def setup_widget(self, custom_widget, name):

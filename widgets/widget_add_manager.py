@@ -120,11 +120,16 @@ class Ui_Add(Ui_Form):
             self.set_plan_repeat_model(plan_instance)
         if self.flag_plan_instance:
             self.save_plan_instance(plan_instance)
+            self.process_plan_instance(plan_instance)
 
     # функция сохранения готового ивента
     def save_plan_instance(self, instance):
         save_manager = db_manager.Save_manager()
         save_manager.save_event(instance)
+        self.clear_fields()
+        pass
+
+    def process_plan_instance(self, instance):
         pass
 
     # функция заполнения объекта ивента
@@ -164,10 +169,8 @@ class Ui_Add(Ui_Form):
                 week_model = plan_manager.rm_week(days_of_week)
                 repeat_instance_.time_interval = week_model
             case Gaps.month.value:
-                # n = 0
-                month_days = [n for n, i in enumerate(self.checked_days_of_month) if i is True]
                 month_model = plan_manager.rm_month(self.checkBox_endure.isChecked(),
-                                                    month_days)
+                                                    self.checked_days_of_month)
                 repeat_instance_.time_interval = month_model
             case Gaps.year.value:
                 year_model = plan_manager.rm_year(self.dateEdit_year.date())

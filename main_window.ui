@@ -132,10 +132,26 @@
     <property name="styleSheet">
      <string notr="true">background-color: rgb(75, 90, 108);</string>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0">
+    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0,0">
      <property name="sizeConstraint">
       <enum>QLayout::SetNoConstraint</enum>
      </property>
+     <item>
+      <spacer name="verticalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>200</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
      <item>
       <widget class="QPushButton" name="pushButton_schedule">
        <property name="enabled">
@@ -177,7 +193,7 @@ border-image: url(:/1_schedule/1_schedule_down.jpg)
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>60</height>
+         <height>400</height>
         </size>
        </property>
       </spacer>
