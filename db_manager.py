@@ -15,7 +15,7 @@ repeat_model_year
 
 name_db = 'events.db'
 
-
+# класс, необходимый для сохранения ивентов. перед сохранением необходимо создать его экземпляр
 class Save_manager:
     def __init__(self, connection=None):
         try:
@@ -87,6 +87,7 @@ class Save_manager:
                     print("Соединение с SQLite закрыто")
         pass
 
+    # функция получает на вход ивент и сохраняет его в бд
     def save_event(self, event: plan_event, connection=None):
         flag_connection = False
         try:
@@ -138,7 +139,7 @@ class Save_manager:
                 connection.close()
                 print("Соединение с SQLite закрыто")
 
-
+# функция сохраняет ивент без учета repeat_model
 def create_event(cursor, event, rm_id):
     query_event = f'''INSERT INTO events
                 (name, description, rm_id)
@@ -174,7 +175,7 @@ def create_event(cursor, event, rm_id):
                 VALUES (?,?)'''
     cursor.executemany(query_tags, tag_tuple)
 
-
+# фунция приводит число в формат ХХ типа str
 def make_xx(*numbers) -> list:
     output = list()
     for i in numbers:
@@ -184,12 +185,12 @@ def make_xx(*numbers) -> list:
             output.append((str(i)))
     return output
 
-
+# получается на вход строку формата hh:mm и конвертирует в объект QTime
 def convert_to_QTime(cursor, time_str):
     time = list(map(lambda x: int(x), time_str.split(':')))
     return QTime(time[0], time[1])
 
-
+# получается на вход строку формата YYYY-mm-dd и конвертирует в объект QDate
 def convert_to_QDate(cursor, jdate):
     query_date = f"SELECT strftime('%Y-%m-%d', '{jdate}')"
     cursor.execute(query_date)
@@ -199,12 +200,14 @@ def convert_to_QDate(cursor, jdate):
     return QDate(date[0], date[1], date[2])
 
 
+# получает на вход SQL запрос и выдает его результат
 def sql_reguest(cursor: sqlite3.Cursor, request: str):
     test = request
     cursor.execute(request)
     result = cursor.fetchall()
     return result
 
+# поверяет существание ивента с заданными параметрами
 def exist_event(cursor, date, rm_id):
     year, month, day = make_xx(date.year(), date.month(), date.day())
     query = f'''SELECT id FROM date WHERE date = julianday('{year}-{month}-{day}')'''
@@ -216,7 +219,7 @@ def exist_event(cursor, date, rm_id):
                 return  True
     return False
 
-
+# класс, необходимый для загрузки ивентов. перед загрузкой необходимо проинициализировать
 class Load_manager:
     from PyQt5.QtCore import QDate, QTime
 
@@ -230,6 +233,7 @@ class Load_manager:
             print('Файл базы данных не обнаружен')
             self.db_flag = False
 
+    # получает на вход промежуток времени в формате QDate и выдает id событий, которые в него попадают
     def find_events(self, date_from: QDate, date_to: QDate, connection=None) -> list:
         flag_connection = False
         try:
@@ -259,6 +263,8 @@ class Load_manager:
             if flag_connection and connection:
                 connection.close()
 
+    # получает на вход промежуток времени в формате QDate и выдает с входящими в него объектами событий список
+    #
     def load_events(self, date_from: QDate, date_to: QDate, connection=None) -> list:
         flag_connection = False
         try:

@@ -1,7 +1,7 @@
 import datetime
 import enum
 
-
+# класс ивента
 class plan_event:
     id: int = 0
     name: str = None
@@ -12,11 +12,7 @@ class plan_event:
     description: str = None
     repeat_model = None  # type: repeat_instance
 
-
-    def __init__(self):
-        pass
-
-
+# класс repeat_model содержит информацию о том, по какой модели повторяется событие
 class repeat_instance:
     type = None  # type: Gaps
     time_interval = None
@@ -25,7 +21,7 @@ class repeat_instance:
     def __init__(self):
         super().__init__()
 
-
+# вспомогательный класс, содержит информацию о дня повторения в неделе
 class rm_week:
     days_week = {}
 
@@ -39,6 +35,7 @@ class rm_week:
         self.days_week = numbers
 
 
+# вспомогательный класс, содержит информацию о дня повторения в месяце
 class rm_month:
     days_month = {}
     isEndure = False
@@ -55,17 +52,14 @@ class rm_month:
         self.isEndure = isEndure
 
 
+# вспомогательный класс, содержит информацию о дня повторения в году
 class rm_year:
     date = None
 
     def __init__(self, date):
         self.date = date
 
-
-if __name__ == "__main__":
-    pass
-
-
+# enum с названиями моделей повторения событий
 class Gaps(enum.Enum):
     day = "дня"
     week = "недели"
