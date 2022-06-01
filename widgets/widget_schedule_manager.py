@@ -18,6 +18,7 @@ class Ui_Schedule(Ui_Form):
     owner = None
     manager = Load_manager()
     events: [plan_event] = list()
+    activity_buttons = list()
 
     def __init__(self, owner):
         self.owner = owner
@@ -31,6 +32,7 @@ class Ui_Schedule(Ui_Form):
         self.widget.setMaximumDate(QDate(2022, 12, 31))
 
         self.events = self.manager.load_events(self.widget.minimumDate(), self.widget.maximumDate())
+        # self.events[0].
 
         # save_manager_ = Save_manager()
         self.comboBoxAddFilters.clear()
@@ -38,11 +40,23 @@ class Ui_Schedule(Ui_Form):
         self.fill_combo_box()
         self.comboBoxAddFilters.activated.connect(self.filter_events_by_tag)
 
+        self.initialize_activity_buttons()
+
+
         pass
+
+    def initialize_activity_buttons(self):
+        self.activity_buttons.append(self.pushButtonActivity_1)
+        self.activity_buttons.append(self.pushButtonActivity_2)
+        self.activity_buttons.append(self.pushButtonActivity_3)
+        self.activity_buttons.append(self.pushButtonActivity_4)
+        self.activity_buttons.append(self.pushButtonActivity_5)
+        self.activity_buttons.append(self.pushButtonActivity_6)
+        self.activity_buttons.append(self.pushButtonActivity_7)
+        self.activity_buttons.append(self.pushButtonActivity_8)
 
     # Соответствует полю "поиск"
     def find_event_by_name(self):
-
 
         pass
 
@@ -75,6 +89,33 @@ class Ui_Schedule(Ui_Form):
         pass
 
     # Отображение в правой части экрана всех активностей за выбранный день
-    def display_events_on_certain_day(self, day: QDate):
+    def display_events_on_certain_day(self, date: QDate):
+        certain_events = list()
+        event: plan_event
+        for event in self.events:
+            if compare_dates((event.date, date)):
+                certain_events.append(event.date)
+        self.display_events(certain_events)
 
         pass
+
+    def display_events(self, target_events):
+        n = 0
+        from PyQt5.QtWidgets import QPushButton
+        but: QPushButton
+        for but in self.activity_buttons:
+            but.hide()
+
+        event: plan_event
+        for event in target_events:
+            but = self.activity_buttons[n]
+            but.setText(event.name + '\n' + f"{event.time_from.toString()}={event.time_to.toString()}")
+            but.show()
+            n += 1
+
+
+def compare_dates(date1: QDate, date2: QDate):
+    cond1 = date1.year() == date2.year()
+    cond2 = date1.month() == date2.month()
+    cond3 = date1.day() == date2.day()
+    return cond1 and cond2 and cond3

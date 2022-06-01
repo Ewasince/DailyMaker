@@ -1,13 +1,15 @@
 import datetime
 import enum
 
+from PyQt5.QtCore import QDate, QTime
+
 
 class plan_event:
     id: int = 0
     name: str = None
-    time_from: datetime.time = None
-    time_to: datetime.time = None
-    date: datetime.date = None
+    time_from: QTime = None
+    time_to: QTime = None
+    date: QDate = None
     tags: list[str] = None
     description: str = None
     repeat_model = None  # type: repeat_instance
