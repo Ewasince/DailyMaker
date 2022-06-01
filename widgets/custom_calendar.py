@@ -1,5 +1,5 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt, QDate
+from PyQt5 import QtGui, QtWidgets
+
 
 class my_calendar(QtWidgets.QCalendarWidget):
     specific_dates = None
@@ -8,9 +8,9 @@ class my_calendar(QtWidgets.QCalendarWidget):
         QtWidgets.QCalendarWidget.__init__(self, parent)
 
     def paintCell(self, painter, rect, date):
+        QtWidgets.QCalendarWidget.paintCell(self, painter, rect, date)
+
         if self.specific_dates is not None and date in self.specific_dates:
-            painter.setPen(QtGui.QPen(QtGui.QColor(0, 200, 200), 2, Qt.SolidLine, Qt.RoundCap))
-            painter.drawLine(rect.topRight(), rect.topLeft())
-            painter.drawLine(rect.topRight(), rect.bottomRight())
-            painter.drawLine(rect.bottomLeft(), rect.bottomRight())
-            painter.drawLine(rect.topLeft(), rect.bottomLeft())
+            painter.setBrush(QtGui.QColor(0, 200, 200, 50))
+            painter.setPen(QtGui.QColor(0, 0, 0, 0))
+            painter.drawRect(rect)
