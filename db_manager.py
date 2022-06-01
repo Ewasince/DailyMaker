@@ -357,19 +357,20 @@ class Load_manager:
                                           e_event.date.month(),
                                           e_event.date.day())
                         # next_date = next_date.addDays(rm_interval * 7)
+                        next_date = e_event.date.addDays((-1) * (next_date.dayOfWeek() - 1))
                         while date_to.toJulianDay() + 7 >= next_date.toJulianDay():
                             query_days = f'''SELECT day FROM repeat_model_days WHERE id = {rm_id}'''
                             cursor.execute(query_days)
                             days = list(map(lambda x: x[0], cursor.fetchall()))
 
-                            # next_date = next_date.addDays((-1) * (next_date.dayOfWeek() -1))
                             for j in range(7):
                                 next_date_ = next_date.addDays(j)
                                 try:
-                                    days.index(next_date_.dayOfWeek() - 1)
-
+                                    if next_date_ <= next_date:
+                                        continue
                                     if exist_event(cursor, next_date_, rm_id):
                                         continue
+                                    days.index(next_date_.dayOfWeek() - 1)
 
                                     e_event.date = next_date_
                                     create_event(cursor, e_event, rm_id)
@@ -378,9 +379,7 @@ class Load_manager:
                                     pass
                             next_date = next_date.addDays(rm_interval * 7)
                     case Gaps.month.value:
-                        next_date = QDate(e_event.date.year(),
-                                          e_event.date.month(),
-                                          e_event.date.day())
+                        next_date = QDate(e_event.date.year(), e_event.date.month(), 1)
                         # next_date = next_date.addMonths(rm_interval)
                         while date_to.toJulianDay() + 31 >= next_date.toJulianDay():
                             query_days = f'''SELECT day FROM repeat_model_days WHERE id = {rm_id}'''
@@ -391,9 +390,11 @@ class Load_manager:
                             for j in range(31):
                                 next_date_ = next_date_.addDays(1)
                                 try:
-                                    days.index(next_date_.day() - 1)
+                                    if next_date_ <= next_date:
+                                        continue
                                     if exist_event(cursor, next_date_, rm_id):
                                         continue
+                                    days.index(next_date_.day() - 1)
 
                                     e_event.date = next_date_
                                     create_event(cursor, e_event, rm_id)
