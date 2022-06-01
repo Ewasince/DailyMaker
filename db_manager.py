@@ -353,7 +353,7 @@ class Load_manager:
                             for j in range(7):
                                 next_date_ = next_date_.addDays(1)
                                 try:
-                                    days.index(next_date_.dayOfWeek())
+                                    days.index(next_date_.dayOfWeek()-1)
 
                                     if exist_event(cursor, next_date, rm_id):
                                         continue

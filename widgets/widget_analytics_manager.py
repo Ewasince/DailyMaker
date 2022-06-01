@@ -10,6 +10,12 @@ class Ui_Analytics(Ui_Form):
     def __init__(self, owner):
         self.owner = owner
 
+    def show(self):
+        self.widget.show()
+
+    def hide(self):
+        self.widget.hide()
+
     def setupUi(self):
         self.widget = QtWidgets.QWidget(self.owner)
         super().setupUi(self.widget)

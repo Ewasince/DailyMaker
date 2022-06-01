@@ -19,6 +19,13 @@ class Ui_Add(Ui_Form):
     def __init__(self, owner):
         self.owner = owner  # установка родительского жлемента
         self.initialize_slider()
+
+    def show(self):
+        self.widget.show()
+
+    def hide(self):
+        self.widget.hide()
+
     # дополнительная инициализация интерфейса
     def setupUi(self):
         self.widget = QtWidgets.QWidget(self.owner)

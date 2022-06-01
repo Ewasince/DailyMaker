@@ -49,9 +49,9 @@ class Ui_MainWindow_cover(Ui_MainWindow):
     def visible_widget(self, target_widget):
         for item in self.widgets_array:
             if item == target_widget:
-                item.widget.show()
+                item.show()
             else:
-                item.widget.hide()
+                item.hide()
 
 
 

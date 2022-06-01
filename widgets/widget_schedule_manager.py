@@ -49,12 +49,30 @@ class Ui_Schedule(Ui_Form):
         self.labelActivity_3.hide()
 
         self.calendar_widget.clicked.connect(self.event_calendar_clicked)
+        self.calendar_widget.currentPageChanged.connect(self.event_change_view)
 
 
         pass
 
+    def show(self):
+        current_date = self.calendarWidget.selectedDate()
+        start_date = QDate(current_date.year(), current_date.month(), 1)
+        end_date = QDate(current_date.year(), current_date.month(), start_date.daysInMonth())
+        self.events = self.manager.load_events(start_date, end_date)
+        self.widget.show()
+
+    def hide(self):
+        self.widget.hide()
+
+
     def event_calendar_clicked(self, day):
         self.display_events_on_certain_day(day)
+        pass
+
+    def event_change_view(self, year, month):
+        start_date = QDate(year, month, 1)
+        end_date = QDate(year, month, start_date.daysInMonth())
+        self.events = self.manager.load_events(start_date, end_date)
         pass
 
 
