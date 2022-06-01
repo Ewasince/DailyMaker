@@ -1,9 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QDate
 
-from plan_manager import plan_event
-from db_manager import Load_manager
-
 class my_calendar(QtWidgets.QCalendarWidget):
     specific_dates = None
 

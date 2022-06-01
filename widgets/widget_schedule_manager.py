@@ -17,6 +17,7 @@ class Ui_Schedule(Ui_Form):
     widget = None
     owner = None
     manager = Load_manager()
+    events: [plan_event] = list()
 
     def __init__(self, owner):
         self.owner = owner
@@ -29,8 +30,11 @@ class Ui_Schedule(Ui_Form):
         self.widget.setMinimumDate(QDate(2022, 1, 1))
         self.widget.setMaximumDate(QDate(2022, 12, 31))
 
+        self.events = self.manager.load_events(self.widget.minimumDate(), self.widget.maximumDate())
+
         # save_manager_ = Save_manager()
         self.comboBoxAddFilters.clear()
+        self.comboBoxAddFilters.setEditable(False)
         self.fill_combo_box()
         self.comboBoxAddFilters.activated.connect(self.filter_events_by_tag)
 
@@ -53,12 +57,9 @@ class Ui_Schedule(Ui_Form):
     def filter_events_by_tag(self):
         tag = self.comboBoxAddFilters.currentText()
 
-        # Получение объектов событий за выбранный месяц
-        events = self.manager.load_events(self.widget.minimumDate(), self.widget.maximumDate())
-
         dates = list()
         # Получение дат событий за выбранный месяц
-        for event in events:
+        for event in self.events:
             if tag in event.tags:
                 dates.append(event.date)
 
@@ -74,6 +75,6 @@ class Ui_Schedule(Ui_Form):
         pass
 
     # Отображение в правой части экрана всех активностей за выбранный день
-    def display_events_on_certain_day(self, day):
+    def display_events_on_certain_day(self, day: QDate):
 
         pass
