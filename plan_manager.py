@@ -18,14 +18,16 @@ class plan_event:
     def __init__(self):
         pass
 
+
 # класс repeat_model содержит информацию о том, по какой модели повторяется событие
 class repeat_instance:
     type = None  # type: Gaps
     time_interval = None
-    gap = None # type: rm_week, rm_month, rm_year
+    gap = None  # type: rm_week, rm_month, rm_year
 
     def __init__(self):
         super().__init__()
+
 
 # вспомогательный класс, содержит информацию о дня повторения в неделе
 class rm_week:
@@ -64,6 +66,7 @@ class rm_year:
 
     def __init__(self, date):
         self.date = date
+
 
 # enum с названиями моделей повторения событий
 class Gaps(enum.Enum):

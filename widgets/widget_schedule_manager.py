@@ -51,7 +51,6 @@ class Ui_Schedule(Ui_Form):
         self.calendar_widget.clicked.connect(self.event_calendar_clicked)
         self.calendar_widget.currentPageChanged.connect(self.event_change_view)
 
-
         pass
 
     def show(self):
@@ -64,7 +63,6 @@ class Ui_Schedule(Ui_Form):
     def hide(self):
         self.widget.hide()
 
-
     def event_calendar_clicked(self, day):
         self.display_events_on_certain_day(day)
         pass
@@ -74,7 +72,6 @@ class Ui_Schedule(Ui_Form):
         end_date = QDate(year, month, start_date.daysInMonth())
         self.events = self.manager.load_events(start_date, end_date)
         pass
-
 
     def initialize_activity_buttons(self):
         self.activity_buttons.append(self.pushButtonActivity_1)

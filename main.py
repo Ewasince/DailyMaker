@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 
 class Ui_MainWindow_cover(Ui_MainWindow):
     widgets_array = []
+
     def setupUi(self, MainWindow):
         super().setupUi(MainWindow)
 
@@ -52,7 +53,6 @@ class Ui_MainWindow_cover(Ui_MainWindow):
                 item.show()
             else:
                 item.hide()
-
 
 
 if __name__ == '__main__':
