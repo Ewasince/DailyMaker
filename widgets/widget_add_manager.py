@@ -4,7 +4,6 @@ import db_manager
 
 from widgets.widget_add import Ui_Form
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QMessageBox
 
 import datetime
 

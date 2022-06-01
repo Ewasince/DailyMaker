@@ -1,6 +1,4 @@
 from main_window import Ui_MainWindow
-# from first_tab import Ui_MainWindow
-# import first_tab
 
 from widgets.widget_schedule_manager import Ui_Schedule
 from widgets.widget_add_manager import Ui_Add
@@ -12,6 +10,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 
 class Ui_MainWindow_cover(Ui_MainWindow):
     widgets_array = []
+
     def setupUi(self, MainWindow):
         super().setupUi(MainWindow)
 
@@ -31,7 +30,6 @@ class Ui_MainWindow_cover(Ui_MainWindow):
         self.setup_widget(self.widget_analytics, "widget_analytics")
 
         self.pushButton_analytics.hide()
-
         self.add_functions()
 
     def setup_widget(self, custom_widget, name):
@@ -52,7 +50,6 @@ class Ui_MainWindow_cover(Ui_MainWindow):
                 item.show()
             else:
                 item.hide()
-
 
 
 if __name__ == '__main__':

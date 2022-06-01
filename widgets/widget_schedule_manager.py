@@ -1,6 +1,3 @@
-import datetime
-
-from PyQt5.QtCore import QDate
 from PyQt5.uic.properties import QtCore
 
 from widgets.widget_schedule import Ui_Form
@@ -26,18 +23,9 @@ class Ui_Schedule(Ui_Form):
         self.widget = QtWidgets.QWidget(self.owner)
         super().setupUi(self.widget)
 
-        self.removeFiltersButton.setStyleSheet("border-radius: 10px;\n"
-                                               "background-color: rgb(63, 75, 90);\n"
-                                               "color: rgb(255, 255, 255);\n"
-                                               "font: 10pt \"Microsoft YaHei UI\";")
-        self.findEventEditText.setStyleSheet("border-radius: 10px;\n"
-                                             "background-color: rgb(63, 75, 90);\n"
-                                             "font: 10pt \"Microsoft YaHei UI\";;\n"
-                                             "color: rgb(255, 255, 255);")
-
         self.events = self.manager.load_events(self.min_date, self.max_date)
 
-        self.fill_combo_box()
+        self.fill_comboBox_init()
         self.comboBoxAddFilters.setCurrentIndex(-1)
         self.comboBoxAddFilters.setEditable(False)
         self.comboBoxAddFilters.activated.connect(self.filter_events_by_tag)
@@ -45,15 +33,22 @@ class Ui_Schedule(Ui_Form):
         self.removeFiltersButton.clicked.connect(self.remove_events)
 
         self.initialize_activity_buttons()
+        self.pushButtonActivity_7.hide()
         for item in self.activity_buttons:
             item.hide()
         self.labelActivity_3.hide()
 
-        #self.findEventEditText.activated.connect(self.find_event_by_name)
+        # self.findEventEditText.installEventFilter(self)
         self.calendarWidget.clicked.connect(self.event_calendar_clicked)
         self.calendarWidget.currentPageChanged.connect(self.event_change_view)
 
         pass
+
+    def eventFilter(self, obj, event):
+        if event.type() == QtCore.QEvent.KeyPress and obj is self.findEventEditText:
+            if event.key() == QtCore.Qt.Key_Return and self.findEventEditText.hasFocus():
+                print('Enter pressed')
+        return super().eventFilter(obj, event)
 
     def show(self):
         current_date = self.calendarWidget.selectedDate()
@@ -76,44 +71,28 @@ class Ui_Schedule(Ui_Form):
         pass
 
     def initialize_activity_buttons(self):
-        settings = '''border-radius: 15px;
-                    background-color: rgb(63, 75, 90);
-                    color: rgb(255, 255, 255);
-                    font: 9pt \"Microsoft YaHei UI\";
-                    '''
-        self.pushButtonActivity_1.setStyleSheet(settings)
-        self.pushButtonActivity_2.setStyleSheet(settings)
-        self.pushButtonActivity_3.setStyleSheet(settings)
-        self.pushButtonActivity_4.setStyleSheet(settings)
-        self.pushButtonActivity_5.setStyleSheet(settings)
-        self.pushButtonActivity_6.setStyleSheet(settings)
-        self.pushButtonActivity_7.setStyleSheet(settings)
-        self.pushButtonActivity_8.setStyleSheet(settings)
-
         self.activity_buttons.append(self.pushButtonActivity_1)
         self.activity_buttons.append(self.pushButtonActivity_2)
         self.activity_buttons.append(self.pushButtonActivity_3)
         self.activity_buttons.append(self.pushButtonActivity_4)
         self.activity_buttons.append(self.pushButtonActivity_5)
         self.activity_buttons.append(self.pushButtonActivity_6)
-        self.activity_buttons.append(self.pushButtonActivity_7)
-        self.activity_buttons.append(self.pushButtonActivity_8)
 
-    # Соответствует полю "поиск"
-    def find_event_by_name(self):
-        name = self.findEventEditText.text()
-
-        # Нахождение элемента с заданным именем
-        event = plan_event()
-        for element in self.events:
-            if element.name == name:
-                event = element
-
-
-        pass
+    # # Соответствует полю "поиск"
+    # def find_event_by_name(self):
+    #     name = self.findEventEditText.text()
+    #
+    #     # Нахождение элемента с заданным именем
+    #     event = plan_event()
+    #     for element in self.events:
+    #         if element.name == name:
+    #             event = element
+    #
+    #
+    #     pass
 
     # Инициализация comboBox с фильтрами
-    def fill_combo_box(self):
+    def fill_comboBox_init(self):
         self.comboBoxAddFilters.addItems(self.manager.get_unique_tags(self.min_date, self.max_date))
         pass
 
@@ -182,6 +161,7 @@ class Ui_Schedule(Ui_Form):
             but.setText(event_name_str + "\n" + f"{event.time_from.toString()[0:-3]}-{event.time_to.toString()[0:-3]}")
             but.show()
             n += 1
+
 
 def compare_dates(date1: QDate, date2: QDate):
     cond1 = date1.year() == date2.year()

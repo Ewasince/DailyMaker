@@ -1,7 +1,7 @@
 from PyQt5 import QtGui, QtWidgets
 
 
-class my_calendar(QtWidgets.QCalendarWidget):
+class My_Calendar(QtWidgets.QCalendarWidget):
     specific_dates = None
 
     def __init__(self, parent=None):

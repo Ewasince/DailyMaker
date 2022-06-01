@@ -20,8 +20,8 @@ class Ui_Form(object):
         self.lineEdit_name.setGeometry(QtCore.QRect(40, 80, 621, 20))
         self.lineEdit_name.setToolTip("")
         self.lineEdit_name.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"font: 10pt \"Microsoft YaHei UI\";;\n"
-"color: rgb(255, 255, 255);")
+                                         "font: 10pt \"Microsoft YaHei UI\";;\n"
+                                         "color: rgb(255, 255, 255);")
         self.lineEdit_name.setText("")
         self.lineEdit_name.setFrame(False)
         self.lineEdit_name.setDragEnabled(False)
@@ -29,63 +29,63 @@ class Ui_Form(object):
         self.pushButton_save = QtWidgets.QPushButton(Form)
         self.pushButton_save.setGeometry(QtCore.QRect(690, 80, 191, 23))
         self.pushButton_save.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"font: 10pt \"Microsoft YaHei UI\";;\n"
-"color: rgb(255, 255, 255);")
+                                           "font: 10pt \"Microsoft YaHei UI\";;\n"
+                                           "color: rgb(255, 255, 255);")
         self.pushButton_save.setObjectName("pushButton_save")
         self.pushButton_delete = QtWidgets.QPushButton(Form)
         self.pushButton_delete.setGeometry(QtCore.QRect(910, 80, 181, 23))
         self.pushButton_delete.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"font: 10pt \"Microsoft YaHei UI\";;\n"
-"color: rgb(255, 255, 255);")
+                                             "font: 10pt \"Microsoft YaHei UI\";;\n"
+                                             "color: rgb(255, 255, 255);")
         self.pushButton_delete.setObjectName("pushButton_delete")
         self.timeEdit_start = QtWidgets.QTimeEdit(Form)
         self.timeEdit_start.setGeometry(QtCore.QRect(40, 120, 291, 22))
         self.timeEdit_start.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"font: 10pt \"Microsoft YaHei UI\";;\n"
-"color: rgb(255, 255, 255);")
+                                          "font: 10pt \"Microsoft YaHei UI\";;\n"
+                                          "color: rgb(255, 255, 255);")
         self.timeEdit_start.setFrame(False)
         self.timeEdit_start.setTime(QtCore.QTime(10, 0, 0))
         self.timeEdit_start.setObjectName("timeEdit_start")
         self.timeEdit_end = QtWidgets.QTimeEdit(Form)
         self.timeEdit_end.setGeometry(QtCore.QRect(360, 120, 301, 22))
         self.timeEdit_end.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"font: 10pt \"Microsoft YaHei UI\";;\n"
-"color: rgb(255, 255, 255);")
+                                        "font: 10pt \"Microsoft YaHei UI\";;\n"
+                                        "color: rgb(255, 255, 255);")
         self.timeEdit_end.setFrame(False)
         self.timeEdit_end.setTime(QtCore.QTime(11, 0, 0))
         self.timeEdit_end.setObjectName("timeEdit_end")
         self.pushButton_today = QtWidgets.QPushButton(Form)
         self.pushButton_today.setGeometry(QtCore.QRect(690, 120, 191, 23))
         self.pushButton_today.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"font: 10pt \"Microsoft YaHei UI\";;\n"
-"color: rgb(255, 255, 255);")
+                                            "font: 10pt \"Microsoft YaHei UI\";;\n"
+                                            "color: rgb(255, 255, 255);")
         self.pushButton_today.setObjectName("pushButton_today")
         self.pushButton_tomorrow = QtWidgets.QPushButton(Form)
         self.pushButton_tomorrow.setGeometry(QtCore.QRect(910, 120, 181, 23))
         self.pushButton_tomorrow.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"font: 10pt \"Microsoft YaHei UI\";;\n"
-"color: rgb(255, 255, 255);")
+                                               "font: 10pt \"Microsoft YaHei UI\";;\n"
+                                               "color: rgb(255, 255, 255);")
         self.pushButton_tomorrow.setObjectName("pushButton_tomorrow")
         self.dateEdit_date = QtWidgets.QDateEdit(Form)
         self.dateEdit_date.setGeometry(QtCore.QRect(690, 160, 401, 22))
         self.dateEdit_date.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"font: 10pt \"Microsoft YaHei UI\";;\n"
-"color: rgb(255, 255, 255);")
+                                         "font: 10pt \"Microsoft YaHei UI\";;\n"
+                                         "color: rgb(255, 255, 255);")
         self.dateEdit_date.setFrame(False)
         self.dateEdit_date.setDateTime(QtCore.QDateTime(QtCore.QDate(2022, 1, 1), QtCore.QTime(0, 0, 0)))
         self.dateEdit_date.setObjectName("dateEdit_date")
         self.lineEdit_tags = QtWidgets.QLineEdit(Form)
         self.lineEdit_tags.setGeometry(QtCore.QRect(40, 160, 621, 20))
         self.lineEdit_tags.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"font: 10pt \"Microsoft YaHei UI\";;\n"
-"color: rgb(255, 255, 255);")
+                                         "font: 10pt \"Microsoft YaHei UI\";;\n"
+                                         "color: rgb(255, 255, 255);")
         self.lineEdit_tags.setFrame(False)
         self.lineEdit_tags.setObjectName("lineEdit_tags")
         self.textEdit_main = QtWidgets.QTextEdit(Form)
         self.textEdit_main.setGeometry(QtCore.QRect(40, 200, 621, 401))
         self.textEdit_main.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"font: 10pt \"Microsoft YaHei UI\";;\n"
-"color: rgb(255, 255, 255);")
+                                         "font: 10pt \"Microsoft YaHei UI\";;\n"
+                                         "color: rgb(255, 255, 255);")
         self.textEdit_main.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.textEdit_main.setObjectName("textEdit_main")
         self.label = QtWidgets.QLabel(Form)
@@ -94,8 +94,8 @@ class Ui_Form(object):
         self.spinBox_count_repeats = QtWidgets.QSpinBox(Form)
         self.spinBox_count_repeats.setGeometry(QtCore.QRect(810, 200, 71, 22))
         self.spinBox_count_repeats.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"font: 10pt \"Microsoft YaHei UI\";;\n"
-"color: rgb(255, 255, 255);")
+                                                 "font: 10pt \"Microsoft YaHei UI\";;\n"
+                                                 "color: rgb(255, 255, 255);")
         self.spinBox_count_repeats.setFrame(False)
         self.spinBox_count_repeats.setMinimum(0)
         self.spinBox_count_repeats.setMaximum(100)
@@ -103,8 +103,8 @@ class Ui_Form(object):
         self.comboBox_gap = QtWidgets.QComboBox(Form)
         self.comboBox_gap.setGeometry(QtCore.QRect(900, 200, 191, 22))
         self.comboBox_gap.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"font: 10pt \"Microsoft YaHei UI\";;\n"
-"color: rgb(255, 255, 255);")
+                                        "font: 10pt \"Microsoft YaHei UI\";;\n"
+                                        "color: rgb(255, 255, 255);")
         self.comboBox_gap.setFrame(False)
         self.comboBox_gap.setObjectName("comboBox_gap")
         self.comboBox_gap.addItem("")
@@ -163,8 +163,8 @@ class Ui_Form(object):
         self.dateEdit_year = QtWidgets.QDateEdit(self.widget_year)
         self.dateEdit_year.setGeometry(QtCore.QRect(10, 10, 381, 22))
         self.dateEdit_year.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"font: 10pt \"Microsoft YaHei UI\";;\n"
-"color: rgb(255, 255, 255);")
+                                         "font: 10pt \"Microsoft YaHei UI\";;\n"
+                                         "color: rgb(255, 255, 255);")
         self.dateEdit_year.setFrame(False)
         self.dateEdit_year.setObjectName("dateEdit_year")
         self.label_2 = QtWidgets.QLabel(Form)
@@ -185,7 +185,7 @@ class Ui_Form(object):
         font.setWeight(50)
         self.label_2.setFont(font)
         self.label_2.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 20pt \"Microsoft YaHei UI\";")
+                                   "font: 20pt \"Microsoft YaHei UI\";")
         self.label_2.setScaledContents(False)
         self.label_2.setWordWrap(False)
         self.label_2.setOpenExternalLinks(False)
@@ -235,7 +235,8 @@ class Ui_Form(object):
         self.checkBox_sa.setText(_translate("Form", "Сб"))
         self.checkBox_su.setText(_translate("Form", "Вс"))
         self.checkBox_gap_month.setText(_translate("Form", "Отмечен"))
-        self.checkBox_endure.setToolTip(_translate("Form", "<html><head/><body><p>Переносить или удалять при выходе за рамки намеченного срока</p></body></html>"))
+        self.checkBox_endure.setToolTip(_translate("Form",
+                                                   "<html><head/><body><p>Переносить или удалять при выходе за рамки намеченного срока</p></body></html>"))
         self.checkBox_endure.setText(_translate("Form", "Переносить даты"))
         self.label_slider.setText(_translate("Form", "1"))
         self.dateEdit_year.setDisplayFormat(_translate("Form", "dd.MM"))
@@ -244,6 +245,7 @@ class Ui_Form(object):
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     Form = QtWidgets.QWidget()
     ui = Ui_Form()
