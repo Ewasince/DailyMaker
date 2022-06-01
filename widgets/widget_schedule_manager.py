@@ -24,8 +24,10 @@ class Ui_Schedule(Ui_Form):
         self.owner = owner
 
     def setupUi(self):
-        self.widget = my_calendar(self.owner)
+        self.widget = QtWidgets.QWidget(self.owner)
+        # self.widget = my_calendar(self.owner):
         super().setupUi(self.widget)
+        self.widget = self.calendarWidget
 
         # TODO возможно нужно изменить минимальную дату
         self.widget.setMinimumDate(QDate(2022, 1, 1))
@@ -42,8 +44,15 @@ class Ui_Schedule(Ui_Form):
 
         self.initialize_activity_buttons()
 
+        self.widget.clicked.connect(lambda: print('Clicked'))
+
 
         pass
+
+    def event_calendar_clicked(self):
+        test = 0
+        pass
+
 
     def initialize_activity_buttons(self):
         self.activity_buttons.append(self.pushButtonActivity_1)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'widget_schedule.ui'
+# Form implementation generated from reading ui file '.\widget_schedule.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -9,7 +9,6 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from widgets.custom_calendar import my_calendar
 
 
 class Ui_Form(object):
@@ -456,7 +455,7 @@ class Ui_Form(object):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Form = my_calendar()
+    Form = QtWidgets.QWidget()
     ui = Ui_Form()
     ui.setupUi(Form)
     Form.show()
