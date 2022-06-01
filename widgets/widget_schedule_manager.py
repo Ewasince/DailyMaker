@@ -60,14 +60,11 @@ class Ui_Schedule(Ui_Form):
         # Получение дат событий за выбранный месяц
         for event in events:
             if tag in event.tags:
-                dates.append(QtCore.QDate.fromString(event.date, f"yyyy-MM-dd")) # TODO КОНВЕРТАЦИЯ DATE ИЗ СТРОКИ В QDATE
+                dates.append(event.date)
 
-        #unique_dates = list(set(dates))
+        unique_dates = list(set(dates))
 
-        #for date in unique_dates:
-         #   print(date)
-
-        #self.widget.specific_dates = QDate(unique_dates)
+        self.widget.specific_dates = unique_dates
         pass
 
     # Очистка фильтров

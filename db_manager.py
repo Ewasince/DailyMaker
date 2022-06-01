@@ -203,7 +203,6 @@ class Load_manager:
     from PyQt5.QtCore import QDate, QTime
 
     db_flag = True
-    cursor = None
 
     def __init__(self):
         try:
@@ -433,9 +432,9 @@ class Load_manager:
         event.id = events_raw[0][0]
         event.name = events_raw[0][1]
         event.description = events_raw[0][2]
-        event.time_from = convert_to_QTime(cursor, time_from_raw[0][1]).toString()
-        event.time_to = convert_to_QTime(cursor, time_to_raw[0][1]).toString()
-        event.date = convert_to_QDate(cursor, date_raw[0][1]).toString()
+        event.time_from = convert_to_QTime(cursor, time_from_raw[0][1])
+        event.time_to = convert_to_QTime(cursor, time_to_raw[0][1])
+        event.date = convert_to_QDate(cursor, date_raw[0][1])
         event.tags = list()
         for tag in tags:
             event.tags.append(tag[1])

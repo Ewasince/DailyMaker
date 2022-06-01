@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\widget_schedule.ui'
+# Form implementation generated from reading ui file 'widget_schedule.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -9,12 +9,13 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from widgets.custom_calendar import my_calendar
 
 
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(1130, 631)
+        Form.resize(1121, 631)
         self.rightLayout = QtWidgets.QWidget(Form)
         self.rightLayout.setGeometry(QtCore.QRect(870, 0, 251, 631))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -58,7 +59,7 @@ class Ui_Form(object):
         self.pushButtonActivity_1.setMaximumSize(QtCore.QSize(200, 55))
         self.pushButtonActivity_1.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_1.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"color: rgb(207, 207, 207);\n"
+"color: rgb(255, 255, 255);\n"
 "font: 13pt \"Microsoft YaHei UI\";")
         self.pushButtonActivity_1.setAutoRepeat(False)
         self.pushButtonActivity_1.setAutoDefault(False)
@@ -75,7 +76,7 @@ class Ui_Form(object):
         self.pushButtonActivity_2.setMaximumSize(QtCore.QSize(200, 55))
         self.pushButtonActivity_2.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_2.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"color: rgb(207, 207, 207);\n"
+"color: rgb(255, 255, 255);\n"
 "font: 13pt \"Microsoft YaHei UI\";")
         self.pushButtonActivity_2.setAutoRepeat(False)
         self.pushButtonActivity_2.setAutoDefault(False)
@@ -92,7 +93,7 @@ class Ui_Form(object):
         self.pushButtonActivity_3.setMaximumSize(QtCore.QSize(200, 55))
         self.pushButtonActivity_3.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_3.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"color: rgb(207, 207, 207);\n"
+"color: rgb(255, 255, 255);\n"
 "font: 13pt \"Microsoft YaHei UI\";")
         self.pushButtonActivity_3.setAutoRepeat(False)
         self.pushButtonActivity_3.setAutoDefault(False)
@@ -109,7 +110,7 @@ class Ui_Form(object):
         self.pushButtonActivity_4.setMaximumSize(QtCore.QSize(200, 55))
         self.pushButtonActivity_4.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_4.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"color: rgb(207, 207, 207);\n"
+"color: rgb(255, 255, 255);\n"
 "font: 13pt \"Microsoft YaHei UI\";")
         self.pushButtonActivity_4.setAutoRepeat(False)
         self.pushButtonActivity_4.setAutoDefault(False)
@@ -126,7 +127,7 @@ class Ui_Form(object):
         self.pushButtonActivity_5.setMaximumSize(QtCore.QSize(200, 55))
         self.pushButtonActivity_5.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_5.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"color: rgb(207, 207, 207);\n"
+"color: rgb(255, 255, 255);\n"
 "font: 13pt \"Microsoft YaHei UI\";")
         self.pushButtonActivity_5.setAutoRepeat(False)
         self.pushButtonActivity_5.setAutoDefault(False)
@@ -143,7 +144,7 @@ class Ui_Form(object):
         self.pushButtonActivity_6.setMaximumSize(QtCore.QSize(200, 55))
         self.pushButtonActivity_6.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_6.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"color: rgb(207, 207, 207);\n"
+"color: rgb(255, 255, 255);\n"
 "font: 13pt \"Microsoft YaHei UI\";")
         self.pushButtonActivity_6.setAutoRepeat(False)
         self.pushButtonActivity_6.setAutoDefault(False)
@@ -160,7 +161,7 @@ class Ui_Form(object):
         self.pushButtonActivity_7.setMaximumSize(QtCore.QSize(200, 55))
         self.pushButtonActivity_7.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_7.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"color: rgb(207, 207, 207);\n"
+"color: rgb(255, 255, 255);\n"
 "font: 13pt \"Microsoft YaHei UI\";")
         self.pushButtonActivity_7.setAutoRepeat(False)
         self.pushButtonActivity_7.setAutoDefault(False)
@@ -177,7 +178,7 @@ class Ui_Form(object):
         self.pushButtonActivity_8.setMaximumSize(QtCore.QSize(200, 55))
         self.pushButtonActivity_8.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_8.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"color: rgb(207, 207, 207);\n"
+"color: rgb(255, 255, 255);\n"
 "font: 13pt \"Microsoft YaHei UI\";")
         self.pushButtonActivity_8.setAutoRepeat(False)
         self.pushButtonActivity_8.setAutoDefault(False)
@@ -233,7 +234,7 @@ class Ui_Form(object):
         self.label.setOpenExternalLinks(False)
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label, 0, QtCore.Qt.AlignVCenter)
-        spacerItem = QtWidgets.QSpacerItem(424, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(645, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.verticalLayout_3.addWidget(self.centerUpperLayout, 0, QtCore.Qt.AlignHCenter)
         self.centerCenterLayout = QtWidgets.QWidget(self.centralLayout)
@@ -250,27 +251,14 @@ class Ui_Form(object):
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2.setSpacing(15)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.addEventButton = QtWidgets.QPushButton(self.centerCenterLayout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.addEventButton.sizePolicy().hasHeightForWidth())
-        self.addEventButton.setSizePolicy(sizePolicy)
-        self.addEventButton.setMinimumSize(QtCore.QSize(160, 30))
-        self.addEventButton.setMaximumSize(QtCore.QSize(130, 30))
-        self.addEventButton.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"font: 10pt \"Microsoft YaHei UI\";;\n"
-"color: rgb(255, 255, 255);")
-        self.addEventButton.setObjectName("addEventButton")
-        self.horizontalLayout_2.addWidget(self.addEventButton, 0, QtCore.Qt.AlignLeft)
         self.findEventEditText = QtWidgets.QLineEdit(self.centerCenterLayout)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.findEventEditText.sizePolicy().hasHeightForWidth())
         self.findEventEditText.setSizePolicy(sizePolicy)
-        self.findEventEditText.setMinimumSize(QtCore.QSize(160, 30))
-        self.findEventEditText.setMaximumSize(QtCore.QSize(160, 30))
+        self.findEventEditText.setMinimumSize(QtCore.QSize(220, 30))
+        self.findEventEditText.setMaximumSize(QtCore.QSize(220, 30))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
         font.setPointSize(10)
@@ -285,10 +273,11 @@ class Ui_Form(object):
         self.findEventEditText.setStyleSheet("background-color: rgb(63, 75, 90);\n"
 "font: 10pt \"Microsoft YaHei UI\";;\n"
 "color: rgb(255, 255, 255);")
+        self.findEventEditText.setText("")
         self.findEventEditText.setFrame(False)
         self.findEventEditText.setObjectName("findEventEditText")
         self.horizontalLayout_2.addWidget(self.findEventEditText, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(105, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.addFiltersLabel = QtWidgets.QLabel(self.centerCenterLayout)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -306,13 +295,82 @@ class Ui_Form(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.comboBoxAddFilters.sizePolicy().hasHeightForWidth())
         self.comboBoxAddFilters.setSizePolicy(sizePolicy)
-        self.comboBoxAddFilters.setMinimumSize(QtCore.QSize(100, 30))
-        self.comboBoxAddFilters.setMaximumSize(QtCore.QSize(100, 30))
+        self.comboBoxAddFilters.setMinimumSize(QtCore.QSize(140, 30))
+        self.comboBoxAddFilters.setMaximumSize(QtCore.QSize(140, 30))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(80, 96, 115))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Text, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(80, 96, 115))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(80, 96, 115))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(80, 96, 115))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Text, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(80, 96, 115))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(80, 96, 115))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(80, 96, 115))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Text, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(80, 96, 115))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(80, 96, 115))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
+        self.comboBoxAddFilters.setPalette(palette)
+        font = QtGui.QFont()
+        font.setFamily("Microsoft JhengHei UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.comboBoxAddFilters.setFont(font)
+        self.comboBoxAddFilters.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
         self.comboBoxAddFilters.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.comboBoxAddFilters.setAutoFillBackground(False)
-        self.comboBoxAddFilters.setStyleSheet("background-color: rgb(63, 75, 90);")
-        self.comboBoxAddFilters.setEditable(False)
+        self.comboBoxAddFilters.setStyleSheet("background-color: rgb(80, 96, 115);\n"
+"color: rgb(255, 255, 255);\n"
+"font: 10pt \"Microsoft JhengHei UI\";")
+        self.comboBoxAddFilters.setEditable(True)
         self.comboBoxAddFilters.setCurrentText("")
+        self.comboBoxAddFilters.setMaxVisibleItems(16)
+        self.comboBoxAddFilters.setInsertPolicy(QtWidgets.QComboBox.InsertAlphabetically)
+        self.comboBoxAddFilters.setFrame(True)
         self.comboBoxAddFilters.setObjectName("comboBoxAddFilters")
         self.horizontalLayout_2.addWidget(self.comboBoxAddFilters, 0, QtCore.Qt.AlignRight)
         self.removeFiltersButton = QtWidgets.QPushButton(self.centerCenterLayout)
@@ -322,7 +380,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.removeFiltersButton.sizePolicy().hasHeightForWidth())
         self.removeFiltersButton.setSizePolicy(sizePolicy)
         self.removeFiltersButton.setMinimumSize(QtCore.QSize(140, 30))
-        self.removeFiltersButton.setMaximumSize(QtCore.QSize(130, 30))
+        self.removeFiltersButton.setMaximumSize(QtCore.QSize(140, 30))
         self.removeFiltersButton.setStyleSheet("background-color: rgb(63, 75, 90);\n"
 "color: rgb(255, 255, 255);\n"
 "font: 10pt \"Microsoft YaHei UI\";")
@@ -359,13 +417,16 @@ class Ui_Form(object):
         self.calendarWidget.setAccessibleName("")
         self.calendarWidget.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.calendarWidget.setAutoFillBackground(False)
-        self.calendarWidget.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-"color: rgb(208, 208, 208);\n"
-"alternate-background-color: rgb(75, 90, 108);")
+        self.calendarWidget.setStyleSheet("background-color: rgb(75, 90, 108);\n"
+"color: rgb(255, 255, 255);\n"
+"alternate-background-color: rgb(63, 75, 90);\n"
+"\n"
+"")
         self.calendarWidget.setInputMethodHints(QtCore.Qt.ImhNone)
         self.calendarWidget.setGridVisible(True)
         self.calendarWidget.setSelectionMode(QtWidgets.QCalendarWidget.SingleSelection)
         self.calendarWidget.setHorizontalHeaderFormat(QtWidgets.QCalendarWidget.ShortDayNames)
+        self.calendarWidget.setVerticalHeaderFormat(QtWidgets.QCalendarWidget.NoVerticalHeader)
         self.calendarWidget.setNavigationBarVisible(True)
         self.calendarWidget.setDateEditEnabled(True)
         self.calendarWidget.setObjectName("calendarWidget")
@@ -386,9 +447,8 @@ class Ui_Form(object):
         self.pushButtonActivity_6.setText(_translate("Form", "Активность 6"))
         self.pushButtonActivity_7.setText(_translate("Form", "Активность 7"))
         self.pushButtonActivity_8.setText(_translate("Form", "Активность 8"))
-        self.label.setText(_translate("Form", "\"Название первой вкладки\""))
-        self.addEventButton.setText(_translate("Form", "Создать событие"))
-        self.findEventEditText.setText(_translate("Form", " Поиск события..."))
+        self.label.setText(_translate("Form", "Расписание"))
+        self.findEventEditText.setPlaceholderText(_translate("Form", " Поиск события..."))
         self.addFiltersLabel.setText(_translate("Form", "Добавить фильтры"))
         self.removeFiltersButton.setText(_translate("Form", "Убрать фильтры"))
 
@@ -396,7 +456,7 @@ class Ui_Form(object):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
+    Form = my_calendar()
     ui = Ui_Form()
     ui.setupUi(Form)
     Form.show()
