@@ -117,6 +117,7 @@ class Ui_Add(Ui_Form):
     def save_plan_instance(self, instance):
         save_manager = db_manager.Save_manager()
         save_manager.save_event(instance)
+        self.clear_fields()
         pass
 
     def process_plan_instance(self, instance):

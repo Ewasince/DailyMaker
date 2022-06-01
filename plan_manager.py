@@ -8,7 +8,7 @@ class plan_event:
     time_from: datetime.time = None
     time_to: datetime.time = None
     date: datetime.date = None
-    tags: str = []
+    tags: list[str] = None
     description: str = None
     repeat_model = None  # type: repeat_instance
 

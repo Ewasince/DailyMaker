@@ -203,6 +203,7 @@ class Load_manager:
     from PyQt5.QtCore import QDate, QTime
 
     db_flag = True
+    cursor = None
 
     def __init__(self):
         try:
@@ -381,49 +382,14 @@ class Load_manager:
                             next_date = next_date.addYears(rm_interval)
                 connection.commit()
 
-            events_id_int = self.find_events(date_from, date_to, connection)
-            events_id_str = '(' + ', '.join(map(lambda x: str(x), events_id_int)) + ')'
+            # Список со всеми id событий за определенный промежуток
+            event_ids = self.find_events(date_from, date_to, connection)
 
-            query_events = f'''SELECT * FROM events WHERE id IN {events_id_str} ORDER BY id'''
-            cursor.execute(query_events)
-            events_raw = cursor.fetchall()
-
-            query_time_from = f'''SELECT * FROM time_from WHERE id IN {events_id_str} ORDER BY id'''
-            cursor.execute(query_time_from)
-            time_from_raw = cursor.fetchall()
-
-            query_time_to = f'''SELECT * FROM time_to WHERE id IN {events_id_str} ORDER BY id'''
-            cursor.execute(query_time_to)
-            time_to_raw = cursor.fetchall()
-
-            query_date = f'''SELECT * FROM date WHERE id IN {events_id_str} ORDER BY id'''
-            cursor.execute(query_date)
-            date_raw = cursor.fetchall()
-
-            query_tags = f'''SELECT * FROM tags WHERE id IN {events_id_str} ORDER BY id'''
-            cursor.execute(query_tags)
-            tags = cursor.fetchall()
-
+            # Список событий. Далее он заполняется при помощи метода find_event_by_id
             events = list()
-            for n, i in enumerate(events_raw):
-                event = plan_event()
-                event.id = i[0]
-                #print("id", i[0])
-                event.name = i[1]
-                #print("name", i[1])
-                event.description = i[2]
-                #print("description", i[2])
-                event.time_from = convert_to_QTime(cursor, time_from_raw[n][1])
-                #print("time_from", time_from_raw[n][1])
-                event.time_to = convert_to_QTime(cursor, time_to_raw[n][1])
-                #print("time_to", time_to_raw[n][1])
-                event.date = convert_to_QDate(cursor, date_raw[n][1])
-                #print("date", date_raw[n][1])
-                event.tags = i[1]
+            for event_id in event_ids:
+                events.append(self.find_event_by_id(event_id, cursor))
 
-                events.append(event)
-            #for element in events:
-            #    print(element)
             return events
 
         except Exception as e:
@@ -432,3 +398,56 @@ class Load_manager:
         finally:
             if flag_connection and connection:
                 connection.close()
+
+    # Метод который получает на вход id события и выводить полную информацию по данному событию
+    def find_event_by_id(self, id, cursor) -> plan_event:
+
+        # Получение информации по событиям из базы данных
+
+        query_events = f'''SELECT * FROM events WHERE id={id}'''
+        cursor.execute(query_events)
+        events_raw = cursor.fetchall()
+
+        query_time_from = f'''SELECT * FROM time_from WHERE id={id}'''
+        cursor.execute(query_time_from)
+        time_from_raw = cursor.fetchall()
+
+        query_time_to = f'''SELECT * FROM time_to WHERE id={id}'''
+        cursor.execute(query_time_to)
+        time_to_raw = cursor.fetchall()
+
+        query_date = f'''SELECT * FROM date WHERE id={id}'''
+        cursor.execute(query_date)
+        date_raw = cursor.fetchall()
+
+        query_tags = f'''SELECT * FROM tags WHERE id={id}'''
+        cursor.execute(query_tags)
+        tags = cursor.fetchall()
+
+        # Создание пустого экземпляра события
+
+        event = plan_event()
+
+        # Последовательное заполнение экземпляра события
+
+        event.id = events_raw[0][0]
+        event.name = events_raw[0][1]
+        event.description = events_raw[0][2]
+        event.time_from = convert_to_QTime(cursor, time_from_raw[0][1]).toString()
+        event.time_to = convert_to_QTime(cursor, time_to_raw[0][1]).toString()
+        event.date = convert_to_QDate(cursor, date_raw[0][1]).toString()
+        event.tags = list()
+        for tag in tags:
+            event.tags.append(tag[1])
+
+        return event
+
+    def get_unique_tags(self, minimumDate: QDate, maximumDate: QDate):
+        events = self.load_events(minimumDate, maximumDate)
+        all_tags = list()
+
+        for event in events:
+            for tag in event.tags:
+                all_tags.append(tag)
+
+        return list(set(all_tags))
