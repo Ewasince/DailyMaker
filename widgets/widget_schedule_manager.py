@@ -30,11 +30,7 @@ class Ui_Schedule(Ui_Form):
         self.widget = QtWidgets.QWidget(self.owner)
         super().setupUi(self.widget)
 
-        date_shown = QDate(self.calendarWidget.yearShown(), self.calendarWidget.monthShown(), 1)
-        self.start_date = date_shown.addDays(-7)
-        self.end_date = date_shown.addDays(date_shown.daysInMonth()-1).addDays(7)
-
-        self.events = self.load_manager.load_events(self.start_date, self.end_date)
+        self.event_change_view(self.calendarWidget.yearShown(), self.calendarWidget.monthShown())
 
         self.refresh_comboBox()
         self.comboBoxAddFilters.setCurrentIndex(-1)
@@ -62,10 +58,8 @@ class Ui_Schedule(Ui_Form):
     #     return super().eventFilter(obj, event)
 
     def show(self):
-        current_date = self.calendarWidget.selectedDate()
-        start_date = QDate(current_date.year(), current_date.month(), 1)
-        end_date = QDate(current_date.year(), current_date.month(), start_date.daysInMonth())
-        self.events = self.load_manager.load_events(start_date, end_date)
+        self.event_change_view(self.calendarWidget.yearShown(), self.calendarWidget.monthShown())
+
         self.comboBoxAddFilters.clear()
         self.refresh_comboBox()
         self.widget.show()
@@ -88,9 +82,10 @@ class Ui_Schedule(Ui_Form):
             self.labelActivity_3.show()
 
     def event_change_view(self, year, month):
-        start_date = QDate(year, month, 1)
-        end_date = QDate(year, month, start_date.daysInMonth())
-        self.events = self.load_manager.load_events(start_date, end_date)
+        date_shown = QDate(year, month, 1)
+        self.start_date = date_shown.addDays(-7)
+        self.end_date = QDate(year, month, date_shown.daysInMonth()).addDays(7)
+        self.events = self.load_manager.load_events(self.start_date, self.end_date)
         pass
 
     def initialize_activity_buttons(self):
@@ -116,8 +111,12 @@ class Ui_Schedule(Ui_Form):
 
     # Обновить выбранные тэги в compoBox
     def refresh_comboBox(self):
-        items = self.load_manager.get_unique_tags(self.start_date, self.end_date)
-        self.comboBoxAddFilters.addItems(items)
+        # items = self.load_manager.get_unique_tags(self.start_date, self.end_date)
+        tags = set()
+        for event in self.events:
+            for tag in event.tags:
+                tags.add(tag)
+        self.comboBoxAddFilters.addItems(tags)
         self.comboBoxAddFilters.setCurrentIndex(-1)
         self.comboBoxAddFilters.setEditable(False)
         pass

@@ -483,9 +483,6 @@ class Load_manager:
 
     def get_unique_tags(self, start_date: QDate, end_date: QDate):
         events = self.load_events(start_date, end_date)
-        query_tags = f'''SELECT DISTINCT id FROM date WHERE 
-        date BETWEEN julianday({start_date.year()}-{start_date.month()}-{start_date.daysInMonth()}) 
-        AND julianday({end_date.year()}-{end_date.month()}-{end_date.daysInMonth()})'''
 
         all_tags = list()
         if len(events) == 0:
