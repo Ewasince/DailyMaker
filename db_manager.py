@@ -230,6 +230,9 @@ def exist_event(cursor, date, rm_id):
 class Load_manager:
     from PyQt5.QtCore import QDate, QTime
 
+    connection: sqlite3.Connection = None
+    cursor: sqlite3.Cursor = None
+
     db_flag = True
 
     def __init__(self):
@@ -438,7 +441,6 @@ class Load_manager:
 
     # Метод который получает на вход id события и выводить полную информацию по данному событию
     def find_event_by_id(self, id, cursor) -> plan_event:
-
         # Получение информации по событиям из базы данных
 
         query_events = f'''SELECT * FROM events WHERE id={id}'''
@@ -495,8 +497,15 @@ class Load_manager:
 
         return list(set(all_tags))
 
-    def open_connect(self):
-        pass
+    def open_connect(self) -> bool:
+        if not self.cursor:
+            if not self.connection:
+                self.Connection = sqlite3.connect(name_db)
+            self.cursor = self.connection.cursor()
+            return True
+        return False
 
     def close_connect(self):
-        pass
+        self.cursor = None
+        self.connection.close()
+        self.cursor = None
