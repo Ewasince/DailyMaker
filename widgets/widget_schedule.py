@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'widget_schedule.ui'
+# Form implementation generated from reading ui file '.\widget_schedule.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -9,7 +9,6 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from widgets.custom_calendar import My_Calendar
 
 
 class Ui_Form(object):
@@ -36,9 +35,9 @@ class Ui_Form(object):
         self.pushButtonActivity_6.setMaximumSize(QtCore.QSize(300, 100))
         self.pushButtonActivity_6.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_6.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-                                                "color: rgb(255, 255, 255);\n"
-                                                "font: 13pt \"Microsoft YaHei UI\";\n"
-                                                "border-radius: 20px;")
+"color: rgb(255, 255, 255);\n"
+"font: 13pt \"Microsoft YaHei UI\";\n"
+"border-radius: 20px;")
         self.pushButtonActivity_6.setAutoRepeat(False)
         self.pushButtonActivity_6.setAutoDefault(False)
         self.pushButtonActivity_6.setFlat(False)
@@ -54,9 +53,9 @@ class Ui_Form(object):
         self.pushButtonActivity_5.setMaximumSize(QtCore.QSize(300, 100))
         self.pushButtonActivity_5.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_5.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-                                                "color: rgb(255, 255, 255);\n"
-                                                "font: 13pt \"Microsoft YaHei UI\";\n"
-                                                "border-radius: 20px;")
+"color: rgb(255, 255, 255);\n"
+"font: 13pt \"Microsoft YaHei UI\";\n"
+"border-radius: 20px;")
         self.pushButtonActivity_5.setAutoRepeat(False)
         self.pushButtonActivity_5.setAutoDefault(False)
         self.pushButtonActivity_5.setFlat(False)
@@ -72,9 +71,9 @@ class Ui_Form(object):
         self.pushButtonActivity_4.setMaximumSize(QtCore.QSize(300, 100))
         self.pushButtonActivity_4.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_4.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-                                                "color: rgb(255, 255, 255);\n"
-                                                "font: 13pt \"Microsoft YaHei UI\";\n"
-                                                "border-radius: 20px;")
+"color: rgb(255, 255, 255);\n"
+"font: 13pt \"Microsoft YaHei UI\";\n"
+"border-radius: 20px;")
         self.pushButtonActivity_4.setAutoRepeat(False)
         self.pushButtonActivity_4.setAutoDefault(False)
         self.pushButtonActivity_4.setFlat(False)
@@ -90,9 +89,9 @@ class Ui_Form(object):
         self.pushButtonActivity_3.setMaximumSize(QtCore.QSize(300, 100))
         self.pushButtonActivity_3.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_3.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-                                                "color: rgb(255, 255, 255);\n"
-                                                "font: 13pt \"Microsoft YaHei UI\";\n"
-                                                "border-radius: 20px;")
+"color: rgb(255, 255, 255);\n"
+"font: 13pt \"Microsoft YaHei UI\";\n"
+"border-radius: 20px;")
         self.pushButtonActivity_3.setAutoRepeat(False)
         self.pushButtonActivity_3.setAutoDefault(False)
         self.pushButtonActivity_3.setFlat(False)
@@ -108,9 +107,9 @@ class Ui_Form(object):
         self.pushButtonActivity_2.setMaximumSize(QtCore.QSize(300, 100))
         self.pushButtonActivity_2.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_2.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-                                                "color: rgb(255, 255, 255);\n"
-                                                "font: 13pt \"Microsoft YaHei UI\";\n"
-                                                "border-radius: 20px;")
+"color: rgb(255, 255, 255);\n"
+"font: 13pt \"Microsoft YaHei UI\";\n"
+"border-radius: 20px;")
         self.pushButtonActivity_2.setAutoRepeat(False)
         self.pushButtonActivity_2.setAutoDefault(False)
         self.pushButtonActivity_2.setFlat(False)
@@ -126,9 +125,9 @@ class Ui_Form(object):
         self.pushButtonActivity_1.setMaximumSize(QtCore.QSize(300, 100))
         self.pushButtonActivity_1.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_1.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-                                                "color: rgb(255, 255, 255);\n"
-                                                "font: 13pt \"Microsoft YaHei UI\";\n"
-                                                "border-radius: 20px;")
+"color: rgb(255, 255, 255);\n"
+"font: 13pt \"Microsoft YaHei UI\";\n"
+"border-radius: 20px;")
         self.pushButtonActivity_1.setAutoRepeat(False)
         self.pushButtonActivity_1.setAutoDefault(False)
         self.pushButtonActivity_1.setDefault(False)
@@ -150,7 +149,7 @@ class Ui_Form(object):
         font.setWeight(50)
         self.labelActivity.setFont(font)
         self.labelActivity.setStyleSheet("color: rgb(255, 255, 255);\n"
-                                         "font: 15pt \"Microsoft YaHei UI\";")
+"font: 15pt \"Microsoft YaHei UI\";")
         self.labelActivity.setTextFormat(QtCore.Qt.AutoText)
         self.labelActivity.setAlignment(QtCore.Qt.AlignCenter)
         self.labelActivity.setObjectName("labelActivity")
@@ -170,7 +169,7 @@ class Ui_Form(object):
         font.setWeight(50)
         self.labelActivity_2.setFont(font)
         self.labelActivity_2.setStyleSheet("color: rgb(255, 255, 255);\n"
-                                           "font: 15pt \"Microsoft YaHei UI\";")
+"font: 15pt \"Microsoft YaHei UI\";")
         self.labelActivity_2.setTextFormat(QtCore.Qt.AutoText)
         self.labelActivity_2.setAlignment(QtCore.Qt.AlignCenter)
         self.labelActivity_2.setObjectName("labelActivity_2")
@@ -190,7 +189,7 @@ class Ui_Form(object):
         font.setWeight(50)
         self.labelActivity_3.setFont(font)
         self.labelActivity_3.setStyleSheet("color: rgb(255, 255, 255);\n"
-                                           "font: 15pt \"Microsoft YaHei UI\";")
+"font: 15pt \"Microsoft YaHei UI\";")
         self.labelActivity_3.setTextFormat(QtCore.Qt.AutoText)
         self.labelActivity_3.setAlignment(QtCore.Qt.AlignCenter)
         self.labelActivity_3.setObjectName("labelActivity_3")
@@ -205,9 +204,9 @@ class Ui_Form(object):
         self.pushButtonActivity_7.setMaximumSize(QtCore.QSize(1000, 1000))
         self.pushButtonActivity_7.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButtonActivity_7.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-                                                "color: rgb(255, 255, 255);\n"
-                                                "font: 13pt \"Microsoft YaHei UI\";\n"
-                                                "border-radius: 20px;")
+"color: rgb(255, 255, 255);\n"
+"font: 13pt \"Microsoft YaHei UI\";\n"
+"border-radius: 20px;")
         self.pushButtonActivity_7.setAutoRepeat(False)
         self.pushButtonActivity_7.setAutoDefault(False)
         self.pushButtonActivity_7.setDefault(False)
@@ -256,7 +255,7 @@ class Ui_Form(object):
         font.setWeight(50)
         self.label.setFont(font)
         self.label.setStyleSheet("color: rgb(255, 255, 255);\n"
-                                 "font: 20pt \"Microsoft YaHei UI\";")
+"font: 20pt \"Microsoft YaHei UI\";")
         self.label.setScaledContents(False)
         self.label.setWordWrap(False)
         self.label.setOpenExternalLinks(False)
@@ -286,9 +285,9 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.addFiltersLabel.sizePolicy().hasHeightForWidth())
         self.addFiltersLabel.setSizePolicy(sizePolicy)
         self.addFiltersLabel.setStyleSheet("color: rgb(255, 255, 255);\n"
-                                           "font: 10pt \"Microsoft YaHei UI\";")
+"font: 10pt \"Microsoft YaHei UI\";")
         self.addFiltersLabel.setObjectName("addFiltersLabel")
-        self.horizontalLayout_2.addWidget(self.addFiltersLabel, 0, QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+        self.horizontalLayout_2.addWidget(self.addFiltersLabel, 0, QtCore.Qt.AlignRight|QtCore.Qt.AlignVCenter)
         self.comboBoxAddFilters = QtWidgets.QComboBox(self.centerCenterLayout)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -364,8 +363,8 @@ class Ui_Form(object):
         self.comboBoxAddFilters.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.comboBoxAddFilters.setAutoFillBackground(False)
         self.comboBoxAddFilters.setStyleSheet("background-color: rgb(80, 96, 115);\n"
-                                              "color: rgb(255, 255, 255);\n"
-                                              "font: 10pt \"Microsoft JhengHei UI\";")
+"color: rgb(255, 255, 255);\n"
+"font: 10pt \"Microsoft JhengHei UI\";")
         self.comboBoxAddFilters.setEditable(False)
         self.comboBoxAddFilters.setCurrentText("")
         self.comboBoxAddFilters.setMaxVisibleItems(16)
@@ -384,13 +383,13 @@ class Ui_Form(object):
         self.removeFiltersButton.setMinimumSize(QtCore.QSize(140, 30))
         self.removeFiltersButton.setMaximumSize(QtCore.QSize(140, 30))
         self.removeFiltersButton.setStyleSheet("background-color: rgb(63, 75, 90);\n"
-                                               "color: rgb(255, 255, 255);\n"
-                                               "font: 10pt \"Microsoft YaHei UI\";\n"
-                                               "border-radius: 10px;")
+"color: rgb(255, 255, 255);\n"
+"font: 10pt \"Microsoft YaHei UI\";\n"
+"border-radius: 10px;")
         self.removeFiltersButton.setObjectName("removeFiltersButton")
-        self.horizontalLayout_2.addWidget(self.removeFiltersButton, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
+        self.horizontalLayout_2.addWidget(self.removeFiltersButton, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         self.verticalLayout_3.addWidget(self.centerCenterLayout, 0, QtCore.Qt.AlignHCenter)
-        self.calendarWidget = My_Calendar(self.centralLayout)
+        self.calendarWidget = QtWidgets.QCalendarWidget(self.centralLayout)
         self.calendarWidget.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -421,10 +420,10 @@ class Ui_Form(object):
         self.calendarWidget.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.calendarWidget.setAutoFillBackground(False)
         self.calendarWidget.setStyleSheet("background-color: rgb(75, 90, 108);\n"
-                                          "color: rgb(255, 255, 255);\n"
-                                          "alternate-background-color: rgb(63, 75, 90);\n"
-                                          "\n"
-                                          "")
+"color: rgb(255, 255, 255);\n"
+"alternate-background-color: rgb(63, 75, 90);\n"
+"\n"
+"")
         self.calendarWidget.setInputMethodHints(QtCore.Qt.ImhNone)
         self.calendarWidget.setGridVisible(True)
         self.calendarWidget.setSelectionMode(QtWidgets.QCalendarWidget.SingleSelection)
@@ -449,11 +448,11 @@ class Ui_Form(object):
         self.pushButtonActivity_1.setText(_translate("Form", "Активность 1"))
         self.labelActivity.setText(_translate("Form", "Список активностей"))
         self.labelActivity_2.setText(_translate("Form", "Здесь будут\n"
-                                                        "отображены\n"
-                                                        " ваши события"))
+"отображены\n"
+" ваши события"))
         self.labelActivity_3.setText(_translate("Form", "На этот день\n"
-                                                        " ничего не\n"
-                                                        "запланировано"))
+" ничего не\n"
+"запланировано"))
         self.pushButtonActivity_7.setText(_translate("Form", "Активность 1"))
         self.label.setText(_translate("Form", "Расписание"))
         self.addFiltersLabel.setText(_translate("Form", "Добавить фильтры"))
@@ -462,7 +461,6 @@ class Ui_Form(object):
 
 if __name__ == "__main__":
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     Form = QtWidgets.QWidget()
     ui = Ui_Form()

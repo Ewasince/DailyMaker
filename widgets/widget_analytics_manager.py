@@ -15,6 +15,6 @@ class Ui_Analytics(Ui_Form):
     def hide(self):
         self.widget.hide()
 
-    def setupUi(self):
+    def setupUi(self, **kwargs):
         self.widget = QtWidgets.QWidget(self.owner)
         super().setupUi(self.widget)

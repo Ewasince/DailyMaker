@@ -1,5 +1,6 @@
 from PyQt5.uic.properties import QtCore
 
+from widgets import custom_calendar
 from widgets.widget_schedule import Ui_Form
 from PyQt5 import QtWidgets
 from db_manager import Load_manager
@@ -7,30 +8,40 @@ from PyQt5.QtCore import QDate
 from plan_manager import plan_event
 
 
+# from custom_calendar import Calendar_manager
+# from custom_calendar import Calendar_manager
+
 class Ui_Schedule(Ui_Form):
     widget = None
     owner = None
-    manager = Load_manager()
+    load_manager = Load_manager()
     events: [plan_event] = list()
     activity_buttons = list()
-    min_date = QDate(2022, 1, 1)
-    max_date = QDate(2022, 12, 31)
+    # min_date = QDate(2022, 1, 1)
+    # max_date = QDate(2022, 12, 31)
+    selected_tags = set()
+    start_date = None # период отображенных дат, старт - неделя
+    end_date = None # период отображенных дат, конец + неделя
 
     def __init__(self, owner):
         self.owner = owner
 
-    def setupUi(self):
+    def setupUi(self, **kwargs):
         self.widget = QtWidgets.QWidget(self.owner)
         super().setupUi(self.widget)
 
-        self.events = self.manager.load_events(self.min_date, self.max_date)
+        date_shown = QDate(self.calendarWidget.yearShown(), self.calendarWidget.monthShown(), 1)
+        self.start_date = date_shown.addDays(-7)
+        self.end_date = date_shown.addDays(date_shown.daysInMonth()-1).addDays(7)
 
-        # self.comboBoxAddFilters.setDuplicatesEnabled(False)
+        self.events = self.load_manager.load_events(self.start_date, self.end_date)
+
+        self.refresh_comboBox()
         self.comboBoxAddFilters.setCurrentIndex(-1)
         self.comboBoxAddFilters.setEditable(False)
-        self.comboBoxAddFilters.activated.connect(self.filter_events_by_tag)
+        self.comboBoxAddFilters.activated.connect(self.event_add_selected_tags)
 
-        self.removeFiltersButton.clicked.connect(self.remove_events)
+        self.removeFiltersButton.clicked.connect(self.event_clear_selected_events)
 
         self.initialize_activity_buttons()
         self.pushButtonActivity_7.hide()
@@ -44,41 +55,51 @@ class Ui_Schedule(Ui_Form):
 
         pass
 
-    def eventFilter(self, obj, event):
-        if event.type() == QtCore.QEvent.KeyPress and obj is self.findEventEditText:
-            if event.key() == QtCore.Qt.Key_Return and self.findEventEditText.hasFocus():
-                print('Enter pressed')
-        return super().eventFilter(obj, event)
+    # def eventFilter(self, obj, event):
+    #     if event.type() == QtCore.QEvent.KeyPress and obj is self.findEventEditText:
+    #         if event.key() == QtCore.Qt.Key_Return and self.findEventEditText.hasFocus():
+    #             print('Enter pressed')
+    #     return super().eventFilter(obj, event)
 
     def show(self):
         current_date = self.calendarWidget.selectedDate()
         start_date = QDate(current_date.year(), current_date.month(), 1)
         end_date = QDate(current_date.year(), current_date.month(), start_date.daysInMonth())
-        self.events = self.manager.load_events(start_date, end_date)
+        self.events = self.load_manager.load_events(start_date, end_date)
         self.comboBoxAddFilters.clear()
-        self.fill_comboBox_init()
+        self.refresh_comboBox()
         self.widget.show()
 
     def hide(self):
         self.widget.hide()
 
-    def event_calendar_clicked(self, day):
-        self.display_events_on_certain_day(day)
-        pass
+    def event_calendar_clicked(self, date: QDate):
+        self.labelActivity_2.hide()
+        certain_events = list()
+        event: plan_event
+        for event in self.events:
+            if compare_dates(event.date, date):
+                certain_events.append(event)
+
+        self.display_events(certain_events)
+        if len(certain_events) != 0:
+            self.labelActivity_3.hide()
+        else:
+            self.labelActivity_3.show()
 
     def event_change_view(self, year, month):
         start_date = QDate(year, month, 1)
         end_date = QDate(year, month, start_date.daysInMonth())
-        self.events = self.manager.load_events(start_date, end_date)
+        self.events = self.load_manager.load_events(start_date, end_date)
         pass
 
     def initialize_activity_buttons(self):
-        self.activity_buttons.append(self.pushButtonActivity_1)
-        self.activity_buttons.append(self.pushButtonActivity_2)
-        self.activity_buttons.append(self.pushButtonActivity_3)
-        self.activity_buttons.append(self.pushButtonActivity_4)
-        self.activity_buttons.append(self.pushButtonActivity_5)
-        self.activity_buttons.append(self.pushButtonActivity_6)
+        self.activity_buttons = [self.pushButtonActivity_1,
+                                 self.pushButtonActivity_2,
+                                 self.pushButtonActivity_3,
+                                 self.pushButtonActivity_4,
+                                 self.pushButtonActivity_5,
+                                 self.pushButtonActivity_6]
 
     # # Соответствует полю "поиск"
     # def find_event_by_name(self):
@@ -93,51 +114,39 @@ class Ui_Schedule(Ui_Form):
     #
     #     pass
 
-    # Инициализация comboBox с фильтрами
-    def fill_comboBox_init(self):
-        self.comboBoxAddFilters.addItems(self.manager.get_unique_tags(self.min_date, self.max_date))
+    # Обновить выбранные тэги в compoBox
+    def refresh_comboBox(self):
+        items = self.load_manager.get_unique_tags(self.start_date, self.end_date)
+        self.comboBoxAddFilters.addItems(items)
+        self.comboBoxAddFilters.setCurrentIndex(-1)
+        self.comboBoxAddFilters.setEditable(False)
         pass
 
-    # Фильтр событий
-    # В параметры функции также требуется передавать текущий выбранный на календаре месяц
-    def filter_events_by_tag(self):
-        tag = self.comboBoxAddFilters.currentText()
+    # Добавить тэг к фильтру
+    def event_add_selected_tags(self):
+        self.selected_tags.add(self.comboBoxAddFilters.currentText())
 
-        dates = list()
+        dates = set()
         # Получение дат событий за выбранный месяц
         for event in self.events:
-            if tag in event.tags:
-                dates.append(event.date)
+            for tag in event.tags:
+                if tag in self.selected_tags:
+                    dates.add(event.date)
 
-        unique_dates = list(set(dates))
-
-        self.calendarWidget.specific_dates = unique_dates
+        custom_calendar.Calendar_manager.selected_dates = dates
         self.calendarWidget.updateCells()
         pass
 
     # Очистка фильтров
-    def remove_events(self):
-        self.calendarWidget.specific_dates = None
+    def event_clear_selected_events(self):
+        custom_calendar.Calendar_manager.selected_dates = None
+        self.selected_tags = set()
         self.calendarWidget.updateCells()
+        self.comboBoxAddFilters.setCurrentIndex(-1)
+        self.comboBoxAddFilters.setEditable(False)
         pass
 
-    # Отображение в правой части экрана всех активностей за выбранный день
-    def display_events_on_certain_day(self, date: QDate):
-        self.labelActivity_2.hide()
-        certain_events = list()
-        event: plan_event
-        for event in self.events:
-            if compare_dates(event.date, date):
-                certain_events.append(event)
-
-        self.display_events(certain_events)
-        if len(certain_events) != 0:
-            self.labelActivity_3.hide()
-        else:
-            self.labelActivity_3.show()
-
-        pass
-
+    # Отобразить выбранный ивент
     def display_events(self, target_events):
         n = 0
         from PyQt5.QtWidgets import QPushButton
@@ -165,7 +174,8 @@ class Ui_Schedule(Ui_Form):
             n += 1
 
 
-def compare_dates(date1: QDate, date2: QDate):
+# сравнение какая дата больше
+def compare_dates(date1: QDate, date2: QDate) -> bool:
     cond1 = date1.year() == date2.year()
     cond2 = date1.month() == date2.month()
     cond3 = date1.day() == date2.day()

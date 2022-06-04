@@ -189,13 +189,13 @@ def make_xx(*numbers) -> list:
     return output
 
 
-# получается на вход строку формата hh:mm и конвертирует в объект QTime
+# получает на вход строку формата hh:mm и конвертирует в объект QTime
 def convert_to_QTime(cursor, time_str):
     time = list(map(lambda x: int(x), time_str.split(':')))
     return QTime(time[0], time[1])
 
 
-# получается на вход строку формата YYYY-mm-dd и конвертирует в объект QDate
+# получает на вход строку формата YYYY-mm-dd и конвертирует в объект QDate
 def convert_to_QDate(cursor, jdate):
     query_date = f"SELECT strftime('%Y-%m-%d', '{jdate}')"
     cursor.execute(query_date)
@@ -479,8 +479,12 @@ class Load_manager:
 
         return event
 
-    def get_unique_tags(self, minimumDate: QDate, maximumDate: QDate):
-        events = self.load_events(minimumDate, maximumDate)
+    def get_unique_tags(self, start_date: QDate, end_date: QDate):
+        events = self.load_events(start_date, end_date)
+        query_tags = f'''SELECT DISTINCT id FROM date WHERE 
+        date BETWEEN julianday({start_date.year()}-{start_date.month()}-{start_date.daysInMonth()}) 
+        AND julianday({end_date.year()}-{end_date.month()}-{end_date.daysInMonth()})'''
+
         all_tags = list()
         if len(events) == 0:
             return []
@@ -490,3 +494,9 @@ class Load_manager:
                 all_tags.append(tag)
 
         return list(set(all_tags))
+
+    def open_connect(self):
+        pass
+
+    def close_connect(self):
+        pass

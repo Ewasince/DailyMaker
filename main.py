@@ -4,12 +4,15 @@ from widgets.widget_schedule_manager import Ui_Schedule
 from widgets.widget_add_manager import Ui_Add
 from widgets.widget_analytics_manager import Ui_Analytics
 
+from widgets import custom_calendar
+
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QApplication
 
 
 class Ui_MainWindow_cover(Ui_MainWindow):
     widgets_array = []
+    calendar_widget = None
 
     def setupUi(self, MainWindow):
         super().setupUi(MainWindow)
@@ -20,6 +23,9 @@ class Ui_MainWindow_cover(Ui_MainWindow):
         self.widgets_array.append(self.widget_schedule)
         self.setup_widget(self.widget_schedule, "widget_schedule")
         self.widget_schedule.widget.show()
+        self.widget_schedule.calendarWidget.paintCell = lambda *n: print(n)
+        custom_calendar.Calendar_manager.calendar_widget = self.widget_schedule.calendarWidget
+        self.widget_schedule.calendarWidget.paintCell = custom_calendar.paintCell
 
         self.widget_add = Ui_Add(parent_widget)
         self.widgets_array.append(self.widget_add)
