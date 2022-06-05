@@ -136,7 +136,7 @@ class Ui_Schedule(Ui_Form):
         self.comboBoxAddFilters.addItems(new_tags)
         self.comboBoxAddFilters.setCurrentIndex(-1)
         self.comboBoxAddFilters.setEditable(False)
-        self.comboBoxAddFilters.sele
+        # self.comboBoxAddFilters.sele
 
         dates = set()
         # Получение дат событий за выбранный месяц
