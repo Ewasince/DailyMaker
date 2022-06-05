@@ -1,11 +1,13 @@
 from PyQt5.uic.properties import QtCore
 
+import tools
 from widgets import custom_calendar
 from widgets.widget_schedule import Ui_Form
 from PyQt5 import QtWidgets
 from db_manager import Load_manager
 from PyQt5.QtCore import QDate
 from plan_manager import plan_event
+import copy
 
 
 # from custom_calendar import Calendar_manager
@@ -17,9 +19,8 @@ class Ui_Schedule(Ui_Form):
     load_manager = Load_manager()
     events: [plan_event] = list()
     activity_buttons = list()
-    # min_date = QDate(2022, 1, 1)
-    # max_date = QDate(2022, 12, 31)
     selected_tags = set()
+    all_tags = set()
     start_date = None # период отображенных дат, старт - неделя
     end_date = None # период отображенных дат, конец + неделя
 
@@ -60,7 +61,7 @@ class Ui_Schedule(Ui_Form):
     def show(self):
         self.event_change_view(self.calendarWidget.yearShown(), self.calendarWidget.monthShown())
 
-        self.comboBoxAddFilters.clear()
+        # self.comboBoxAddFilters.clear()
         self.refresh_comboBox()
         self.widget.show()
 
@@ -72,7 +73,7 @@ class Ui_Schedule(Ui_Form):
         certain_events = list()
         event: plan_event
         for event in self.events:
-            if compare_dates(event.date, date):
+            if event.date.toJulianDay() == date.toJulianDay():
                 certain_events.append(event)
 
         self.display_events(certain_events)
@@ -112,18 +113,30 @@ class Ui_Schedule(Ui_Form):
     # Обновить выбранные тэги в compoBox
     def refresh_comboBox(self):
         # items = self.load_manager.get_unique_tags(self.start_date, self.end_date)
-        tags = set()
+        self.all_tags = set()
         for event in self.events:
             for tag in event.tags:
-                tags.add(tag)
-        self.comboBoxAddFilters.addItems(tags)
+                self.all_tags.add(tag)
+        self.comboBoxAddFilters.clear()
+        self.selected_tags = set()
+        self.comboBoxAddFilters.addItems(self.all_tags)
         self.comboBoxAddFilters.setCurrentIndex(-1)
         self.comboBoxAddFilters.setEditable(False)
+        # self.calendarWidget.updateCells()
         pass
 
     # Добавить тэг к фильтру
     def event_add_selected_tags(self):
-        self.selected_tags.add(self.comboBoxAddFilters.currentText())
+        new_tag = self.comboBoxAddFilters.currentText()
+        self.selected_tags.add(new_tag)
+        new_tags = copy.copy(self.all_tags)
+        for item in self.selected_tags:
+            new_tags.remove(item)
+        self.comboBoxAddFilters.clear()
+        self.comboBoxAddFilters.addItems(new_tags)
+        self.comboBoxAddFilters.setCurrentIndex(-1)
+        self.comboBoxAddFilters.setEditable(False)
+        self.comboBoxAddFilters.sele
 
         dates = set()
         # Получение дат событий за выбранный месяц
@@ -139,8 +152,10 @@ class Ui_Schedule(Ui_Form):
     # Очистка фильтров
     def event_clear_selected_events(self):
         custom_calendar.Calendar_manager.selected_dates = None
-        self.selected_tags = set()
         self.calendarWidget.updateCells()
+        self.comboBoxAddFilters.clear()
+        self.selected_tags = set()
+        self.comboBoxAddFilters.addItems(self.all_tags)
         self.comboBoxAddFilters.setCurrentIndex(-1)
         self.comboBoxAddFilters.setEditable(False)
         pass
@@ -173,9 +188,3 @@ class Ui_Schedule(Ui_Form):
             n += 1
 
 
-# сравнение какая дата больше
-def compare_dates(date1: QDate, date2: QDate) -> bool:
-    cond1 = date1.year() == date2.year()
-    cond2 = date1.month() == date2.month()
-    cond3 = date1.day() == date2.day()
-    return cond1 and cond2 and cond3

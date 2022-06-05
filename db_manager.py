@@ -1,4 +1,8 @@
 import sqlite3
+
+from _sqlite3 import Cursor
+
+import tools
 from plan_manager import *
 from PyQt5.QtCore import QTime, QDate
 
@@ -226,6 +230,17 @@ def exist_event(cursor, date, rm_id):
     return False
 
 
+def delete_event(cursor: Cursor, rm_type: str, rm_id: int):
+    query_rm_delete = f'''DELETE FROM repeat_model WHERE id = {rm_id}'''
+    cursor.execute(query_rm_delete)
+    if rm_type == Gaps.week.value or rm_type == Gaps.month.value:
+        query_rm_delete = f'''DELETE FROM repeat_model_days WHERE id = {rm_id}'''
+        cursor.execute(query_rm_delete)
+    else:
+        query_rm_delete = f'''DELETE FROM repeat_model_year WHERE id = {rm_id}'''
+        cursor.execute(query_rm_delete)
+
+
 # класс, необходимый для загрузки ивентов. перед загрузкой необходимо проинициализировать
 class Load_manager:
     from PyQt5.QtCore import QDate, QTime
@@ -297,14 +312,7 @@ class Load_manager:
                 cursor.execute(query_events_rm)
                 events_rm_raw = cursor.fetchall()
                 if len(events_rm_raw) == 0:  # если у перебираемого repeat_model нету event'ов, то он удаляется
-                    query_rm_delete = f'''DELETE FROM repeat_model WHERE id = {rm_id}'''
-                    cursor.execute(query_rm_delete)
-                    if rm_type == Gaps.week.value or rm_type == Gaps.month.value:
-                        query_rm_delete = f'''DELETE FROM repeat_model_days WHERE id = {rm_id}'''
-                        cursor.execute(query_rm_delete)
-                    else:
-                        query_rm_delete = f'''DELETE FROM repeat_model_year WHERE id = {rm_id}'''
-                        cursor.execute(query_rm_delete)
+                    delete_event(cursor, rm_type, rm_id)
                     continue
                 query_events_rm_int = list(map(lambda x: str(x[0]), events_rm_raw))
                 query_events_rm_str = '(' + ', '.join(query_events_rm_int) + ')'
@@ -369,7 +377,7 @@ class Load_manager:
                             for j in range(7):
                                 next_date_ = next_date.addDays(j)
                                 try:
-                                    if next_date_ <= next_date:
+                                    if next_date_.toJulianDay() <= e_event.date.toJulianDay():
                                         continue
                                     if exist_event(cursor, next_date_, rm_id):
                                         continue
